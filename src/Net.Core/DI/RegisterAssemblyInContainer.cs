@@ -1,7 +1,7 @@
 ﻿using System;
 using Net.Annotations;
 
-namespace Net.DependencyInjection
+namespace Net.DI
 {
     /// <summary>
     /// mark an assembly to be automatically scanned for classes and interfaces

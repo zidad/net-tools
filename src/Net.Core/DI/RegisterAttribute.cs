@@ -1,7 +1,7 @@
 ﻿using System;
 using Net.Annotations;
 
-namespace Net.DependencyInjection
+namespace Net.DI
 {
     /// <summary>
     /// mark a class or interface as a service to be automatically discovered
