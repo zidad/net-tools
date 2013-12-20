@@ -1,14 +1,27 @@
-language: c
+# language: c
+# before_install:
+# Make sure mono is installed,
+# pipe stdout to dev/null because qq is still too chatty
+#  - sudo apt-get update -qq > /dev/null
+#  - sudo apt-get install -qq mono-devel > /dev/null
+#  - mozroots --import --sync
+#
+#  env:
+#  - EnableNuGetPackageRestore=true
+#
+#  script:
+#  - xbuild 
+language: objective-c
+
+env:
+ global:
+  - EnableNuGetPackageRestore=true 
+ matrix:
+  - MONO_VER="3.2.4"
 
 before_install:
-  # Make sure mono is installed,
-  # pipe stdout to dev/null because qq is still too chatty
-  - sudo apt-get update -qq > /dev/null
-  - sudo apt-get install -qq mono-devel > /dev/null
-  - mozroots --import --sync
+ - wget "http://download.mono-project.com/archive/${MONO_VER}/macos-10-x86/MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg"
+ - sudo installer -pkg "MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg" -target /
 
-  env:
-  - EnableNuGetPackageRestore=true
-
-  script:
-  - xbuild 
+script:
+ - xbuild 
