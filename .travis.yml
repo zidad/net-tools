@@ -24,4 +24,4 @@ before_install:
  - sudo installer -pkg "MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg" -target /
 
 script:
- - xbuild 
+ - xbuild src/Net.Tools.sln
