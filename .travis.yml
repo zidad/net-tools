@@ -25,3 +25,4 @@ before_install:
 
 script:
  - xbuild src/Net.Tools.sln
+ - .ci/nunit.sh bin/Net.Tests.dll
