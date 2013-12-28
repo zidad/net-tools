@@ -13,6 +13,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.EasyNetQ", "Net.EasyNet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.MassTransit", "Net.MassTransit\Net.MassTransit.csproj", "{24B9EF2D-DBFA-485A-B866-2EC9D3B054DE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{B6837413-0A56-4890-B943-7D0FCB3F8761}"
+	ProjectSection(SolutionItems) = preProject
+		.build\MSBuild.Community.Tasks.dll = .build\MSBuild.Community.Tasks.dll
+		.build\MSBuild.Community.Tasks.targets = .build\MSBuild.Community.Tasks.targets
+		.build\Net.Tools.proj = .build\Net.Tools.proj
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.Tests", "Net.Tests\Net.Tests.csproj", "{0703B1AB-80F4-4646-9032-396042311FA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +48,10 @@ Global
 		{24B9EF2D-DBFA-485A-B866-2EC9D3B054DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24B9EF2D-DBFA-485A-B866-2EC9D3B054DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24B9EF2D-DBFA-485A-B866-2EC9D3B054DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0703B1AB-80F4-4646-9032-396042311FA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0703B1AB-80F4-4646-9032-396042311FA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0703B1AB-80F4-4646-9032-396042311FA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0703B1AB-80F4-4646-9032-396042311FA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
