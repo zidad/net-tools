@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>Net.Core</id>
+    <!-- Version gets updated during the build's packaging process -->
+    <version>0.1.0.0</version>
+    <title>Net.Core</title>
+    <authors>Wiebe Tijsma, Paul Looijmans</authors>
+    <owners>Wiebe Tijsma</owners>
+    <licenseUrl>https://github.com/zidad/Net.Tools</licenseUrl>
+    <projectUrl>https://github.com/zidad/Net.Tools/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Various tools to extend the .NET FrameWork</description>
+    <releaseNotes>
+    </releaseNotes>
+    <copyright>Copyright Wiebe Tijsma 2013</copyright>
+    <tags>C#</tags>
+  </metadata>
+</package>

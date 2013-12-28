@@ -1,1 +1,0 @@
-msbuild /t:Build /p:RunOctoPack=true /p:VisualStudioVersion=12.0 /p:Configuration=Debug
