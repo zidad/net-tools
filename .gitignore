@@ -20,6 +20,7 @@ build/
 src/packages/
 *.nupkg
 Package/*/lib
+src/.build/TestResult.xml
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
