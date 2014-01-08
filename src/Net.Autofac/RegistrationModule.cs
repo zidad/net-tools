@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Compilation;
 using Autofac;
 using Autofac.Util;
-using Net.DI;
+using Net.DependencyInjection;
 using Net.Reflection;
 using Module = Autofac.Module;
 

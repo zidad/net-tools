@@ -10,7 +10,6 @@ using Autofac.Builder;
 using Autofac.Core;
 using Autofac.Features.Scanning;
 using Autofac.Util;
-using Net.DI;
 
 namespace Net.Autofac
 {
