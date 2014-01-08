@@ -7,8 +7,8 @@
     <title>Net.Core</title>
     <authors>Wiebe Tijsma, Paul Looijmans</authors>
     <owners>Wiebe Tijsma</owners>
-    <licenseUrl>https://github.com/zidad/Net.Tools</licenseUrl>
-    <projectUrl>https://github.com/zidad/Net.Tools/</projectUrl>
+    <licenseUrl>https://github.com/zidad/net-tools</licenseUrl>
+    <projectUrl>https://github.com/zidad/net-tools/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Various tools to extend the .NET FrameWork</description>
     <releaseNotes>

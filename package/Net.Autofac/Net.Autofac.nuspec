@@ -3,12 +3,12 @@
   <metadata>
     <id>Net.Autofac</id>
     <!-- Version gets updated during the build's packaging process -->
-    <version>0.26.0.0</version>
+    <version>0.1.0.1</version>
     <title>Net.Core</title>
-    <authors>Wiebe Tijsma, Paul Looijmans</authors>
+    <authors>Wiebe Tijsma</authors>
     <owners>Wiebe Tijsma</owners>
-    <licenseUrl>https://github.com/zidad/Net.Tools</licenseUrl>
-    <projectUrl>https://github.com/zidad/Net.Tools/</projectUrl>
+    <licenseUrl>https://github.com/zidad/net-tools</licenseUrl>
+    <projectUrl>https://github.com/zidad/net.tools/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Various tools to extend the .NET FrameWork</description>
     <releaseNotes>
