@@ -3,7 +3,7 @@
   <metadata>
     <id>Net.Core</id>
     <!-- Version gets updated during the build's packaging process -->
-    <version>0.1.1.27675</version>
+    <version>0.1.1.28923</version>
     <title>Net.Core</title>
     <authors>Wiebe Tijsma, Paul Looijmans</authors>
     <owners>Wiebe Tijsma</owners>
