@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.1")]
+[assembly: AssemblyVersion("0.1.1.*")]
+[assembly: AssemblyFileVersion("0.1.1.0")]
 
 [assembly: AssemblyCompany("NetIndustry.nl, Codeworks.nl, Shader.nl, SprintRepubliq")]
 [assembly: AssemblyProduct("Net.Tools")]
