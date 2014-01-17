@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Compilation;
 using Autofac;
 using Autofac.Util;
+using Net.Annotations;
 using Net.DependencyInjection;
 using Net.Reflection;
 using Module = Autofac.Module;
@@ -18,6 +19,7 @@ namespace Net.Autofac
     ///     applied.
     ///     - Ignores types that have the 'Ignore' bit set
     /// </summary>
+    [UsedImplicitly]
     public class RegistrationModule : Module
     {
         private readonly RegistrationModuleSettings settings;
@@ -90,7 +92,7 @@ namespace Net.Autofac
 
                     if (!string.IsNullOrEmpty(attribute.Key))
                     {
-                        string appSetting = ConfigurationManager.AppSettings["ServiceRegistration:" + attribute.Key];
+                        string appSetting = ConfigurationManager.AppSettings["Registration:" + attribute.Key];
 
                         return !string.IsNullOrEmpty(appSetting)
                             ? appSetting == attribute.Value
@@ -168,7 +170,7 @@ namespace Net.Autofac
             var openGenericTypes = AssembliesToInclude
                 .SelectMany(a => a.GetLoadableTypes())
                 .Select(t => new { Type = t, Attribute = t.GetAttribute<RegisterAttribute>() })
-                .Where(t => /*t.Attribute != null &&*/
+                .Where(t => 
                     t.Type.IsClass &&
                     t.Type.IsGenericTypeDefinition &&
                     !t.Type.IsAnonymousType() &&

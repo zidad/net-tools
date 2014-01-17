@@ -17,7 +17,7 @@
 
     <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
 
-    <Target Name="Default" DependsOnTargets="Version; Build; Test; PackageCore; " />
+    <Target Name="Default" DependsOnTargets="Version; Build; Test; PackageCore; PackageAutofac " />
 
     <Target Name="Version">
         <FileUpdate Files="$(Source)\Version.cs"
@@ -74,4 +74,32 @@
         <Message Text="##teamcity[buildNumber '%(AsmInfo.Version)']" />
     </Target>
 
+    <!-- Packaging -->
+    <Target Name="PackageAutofac" DependsOnTargets="Build">
+
+        <PropertyGroup>
+            <PackageName>Net.Autofac</PackageName>
+        </PropertyGroup>
+
+        <ItemGroup>
+            <FilesToDelete Include="$(Package)\$(PackageName)\*.nupkg"  />
+        </ItemGroup>
+      
+        <Delete Files="@(FilesToDelete)" />
+    
+        <Copy SourceFiles="$(OutputDir)\$(PackageName).dll" DestinationFolder="$(Package)\$(PackageName)\lib\net40" />
+        <GetAssemblyIdentity AssemblyFiles="$(OutputDir)\$(PackageName).dll">
+            <Output TaskParameter="Assemblies" ItemName="AsmInfo" />
+        </GetAssemblyIdentity>        
+        
+        <XmlUpdate
+            Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
+            XmlFileName="$(Package)\$(PackageName)\$(PackageName).nuspec"
+            XPath="/package/metadata/version"
+            Value="%(AsmInfo.Version)" />        
+        
+        <Exec WorkingDirectory="$(Package)\$(PackageName)" Command="$(NuGet)\NuGet.exe pack $(Package)\$(PackageName)\$(PackageName).nuspec" />
+
+        <Message Text="##teamcity[buildNumber '%(AsmInfo.Version)']" />
+    </Target>
 </Project>

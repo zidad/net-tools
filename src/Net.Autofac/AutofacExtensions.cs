@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Reflection;
-using System.Web;
-using System.Web.Compilation;
 using Autofac;
 using Autofac.Builder;
 using Autofac.Core;
 using Autofac.Features.Scanning;
-using Autofac.Util;
 
 namespace Net.Autofac
 {
