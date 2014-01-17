@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using Autofac;
 using Net.Reflection;
 
@@ -18,5 +20,12 @@ namespace Net.Autofac
 
             preloader.PreLoadAssembliesFromPath();
         }
+
+        public AssemblyPreloaderModule Filter(Func<FileInfo, bool> filter)
+        {
+            preloader.Filter(filter);
+            return this;
+        }
+
     }
 }
