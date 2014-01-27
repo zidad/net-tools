@@ -10,21 +10,21 @@ namespace Net.System
 {
     public static class ToExtensions
     {
-        public static T To<T>(this object source, object defaultValue = null, string format = null, object errorValue = null, string errorExceptionMessage = null, Func<T, T> transform = null)
+        public static T To<T>(this object source, string format = null, object defaultValue = null, object errorValue = null, string errorExceptionMessage = null, Func<T, T> transform = null)
         {
-            var value = (T)To(source, typeof(T), defaultValue, format, errorValue, errorExceptionMessage);
+            var value = (T)To(source, typeof(T), format, defaultValue, errorValue, errorExceptionMessage);
 
             if (transform != null) value = transform(value);
 
             return value;
         }
 
-        public static object To(this object source, Type type, object defaultValue = null, string format = null, object errorValue = null, string errorExceptionMessage = null)
+        public static object To(this object source, Type targetType, string format = null, object defaultValue = null, object errorValue = null, string errorExceptionMessage = null)
         {
-            if (type == null)
-                throw new ArgumentNullException("type");
+            if (targetType == null)
+                throw new ArgumentNullException("targetType");
 
-            var value = ToInternal(source, type, format, errorValue, errorExceptionMessage);
+            var value = ToInternal(source, targetType, format, errorValue, errorExceptionMessage);
 
             if (value == null && defaultValue != null)
                 return defaultValue;
@@ -42,73 +42,15 @@ namespace Net.System
             return (from object variable in source select variable.To<T>());
         }
 
-        static object ToInternal(object source, Type type, string format, object errorValue, string errorExceptionMessage)
+        static object ToInternal(object source, Type targetType, string format, object errorValue, string errorExceptionMessage)
         {
             try
             {
-                if (source != null && type.IsInstanceOfType(source) && format == null)
+                if (source != null && targetType.IsInstanceOfType(source) && format == null)
                     return source;
 
-                if (type == typeof(string))
-                {
-                    if (source == null)
-                        return string.Empty;
-
-                    if (format.HasNoValue())
-                        return source.ToString().Trim();
-
-                    if (source is DateTime || source is DateTime?)
-                        return ((DateTime)source).ToString(format);
-
-                    if (source is int || source is int?)
-                    {
-                        if (format == "MMM")
-                            return CultureInfo.CurrentUICulture.DateTimeFormat.GetAbbreviatedMonthName((int)source);
-
-                        return ((int)source).ToString(format);
-                    }
-
-                    if (source is decimal || source is decimal?)
-                        return ((decimal)source).ToString(format);
-
-                    switch (format.ToLowerInvariant())
-                    {
-                        case "camelcase":
-                            return source.ToString().ToCamelCase();
-                        case "pascalcase":
-                            return source.ToString().ToPascalCase();
-                    }
-
-                    // Implement format support for different types here as necessary. 
-                    throw new NotImplementedException("Conversion with format from type {0} to string is not supported".FormatWith(type));
-                }
-
-                if (type == typeof(TimeSpan))
-                    return ToTimeSpan(Convert.ToString(source, CultureInfo.CurrentCulture));
-
-                if (type == typeof(DateTime))
-                    return ToDateTime(Convert.ToString(source, CultureInfo.CurrentCulture), format);
-
-                if (type == typeof(int))
-                    return ToInt(source);
-
-                if (type == typeof(double))
-                    return ToDouble(Convert.ToString(source, CultureInfo.CurrentCulture));
-
-                if (type == typeof(decimal))
-                    return ToDecimal(Convert.ToString(source, CultureInfo.CurrentCulture));
-
-                if (type == typeof(Guid))
-                    return (source == null) ? Guid.Empty : new Guid(source.ToString());
-
-                if (type == typeof(bool))
-                    return ToBoolean(source);
-
-                if (typeof(Enum).IsAssignableFrom(type))
-                    return ToEnum(source, type);
-
-                //  Maybe we can convert all nullable types with another pass through To(source, Nullable.GetUnderlyingType(type))
-                var targetTypeIsNullable = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+                //  Maybe we can convert all nullable types with another pass through To(source, Nullable.GetUnderlyingType(targetType))
+                var targetTypeIsNullable = targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Nullable<>);
 
                 if (targetTypeIsNullable)
                 {
@@ -118,10 +60,60 @@ namespace Net.System
                     if (source == DBNull.Value)
                         return null;
 
-                    return ToInternal(source, Nullable.GetUnderlyingType(type), format, errorValue, errorExceptionMessage);
+                    return ToInternal(source, Nullable.GetUnderlyingType(targetType), format, errorValue, errorExceptionMessage);
                 }
 
-                return Convert.ChangeType(source, type, CultureInfo.CurrentCulture);
+                if (targetType == typeof(string))
+                {
+                    if (source == null)
+                        return string.Empty;
+
+                    if (format.HasNoValue())
+                        return source.ToString().Trim();
+
+                    if (source is DateTime)
+                        return ((DateTime)source).ToString(format);
+
+                    if (source is int)
+                    {
+                        if (format == "MMM")
+                            return CultureInfo.CurrentUICulture.DateTimeFormat.GetAbbreviatedMonthName((int)source);
+
+                        return ((int)source).ToString(format);
+                    }
+
+                    if (source is decimal)
+                        return ((decimal)source).ToString(format);
+
+                    // Implement format support for different types here as necessary. 
+                    throw new NotImplementedException("Conversion with format from targetType {0} to string is not supported".FormatWith(targetType));
+                }
+
+                if (targetType == typeof(TimeSpan))
+                    return ToTimeSpan(Convert.ToString(source, CultureInfo.CurrentCulture));
+
+                if (targetType == typeof(DateTime))
+                    return ToDateTime(Convert.ToString(source, CultureInfo.CurrentCulture), format);
+
+                if (targetType == typeof(int))
+                    return ToInt(source);
+
+                if (targetType == typeof(double))
+                    return ToDouble(Convert.ToString(source, CultureInfo.CurrentCulture));
+
+                if (targetType == typeof(decimal))
+                    return ToDecimal(Convert.ToString(source, CultureInfo.CurrentCulture));
+
+                if (targetType == typeof(Guid))
+                    return (source == null) ? Guid.Empty : new Guid(source.ToString());
+
+                if (targetType == typeof(bool))
+                    return ToBoolean(source);
+
+                if (typeof(Enum).IsAssignableFrom(targetType))
+                    return ToEnum(source, targetType);
+
+                return Convert.ChangeType(source, targetType, CultureInfo.CurrentCulture);
             }
             catch (Exception ex)
             {
@@ -130,7 +122,7 @@ namespace Net.System
 
                 throw new FormatException(
                     errorExceptionMessage ??
-                    "Cannot convert value '{0}' from {1} to {2}. See InnerException for more details.".FormatWith(source, source == null ? "null" : source.GetType().ToString(), type),
+                    "Cannot convert value '{0}' from {1} to {2}. See InnerException for more details.".FormatWith(source, source == null ? "null" : source.GetType().ToString(), targetType),
                     ex);
             }
         }
