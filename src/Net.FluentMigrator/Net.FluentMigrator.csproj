@@ -47,6 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Version.cs">
+      <Link>Properties\Version.cs</Link>
+    </Compile>
     <Compile Include="DataExpressionRoot.cs" />
     <Compile Include="FluentMigrationAttribute.cs" />
     <Compile Include="FluentMigrationSyntaxExtensions.cs" />
@@ -57,6 +60,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\package\Net.FluentMigrator\Net.FluentMigrator.nuspec">
+      <Link>Properties\Net.FluentMigrator.nuspec</Link>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
