@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.Core", "Net.Core\Net.Core.csproj", "{BBA0A9E7-2819-4ADA-94DB-BF5F3C5A6E1E}"
 EndProject
@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{981013
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.FluentMigrator", "Net.FluentMigrator\Net.FluentMigrator.csproj", "{87142B17-8DBB-4FEE-A14C-987085AE06E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{0703B1AB-80F4-4646-9032-396042311FA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0703B1AB-80F4-4646-9032-396042311FA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0703B1AB-80F4-4646-9032-396042311FA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87142B17-8DBB-4FEE-A14C-987085AE06E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87142B17-8DBB-4FEE-A14C-987085AE06E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87142B17-8DBB-4FEE-A14C-987085AE06E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87142B17-8DBB-4FEE-A14C-987085AE06E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
