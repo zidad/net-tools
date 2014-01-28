@@ -3,7 +3,7 @@
   <metadata>
     <id>Net.Autofac</id>
     <!-- Version gets updated during the build's packaging process -->
-    <version>0.1.2.0</version>
+    <version>0.1.3.0</version>
     <title>Net.Autofac</title>
     <authors>Wiebe Tijsma</authors>
     <owners>Wiebe Tijsma</owners>

@@ -17,7 +17,7 @@
 
     <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
 
-    <Target Name="Default" DependsOnTargets="Version; Build; Test; PackageCore; PackageAutofac; PackageFluentMigrator" />
+    <Target Name="Default" DependsOnTargets="Version; Build; Test; CreatePackages;" />
 
     <Target Name="Version">
         <FileUpdate Files="$(Source)\Version.cs"
@@ -32,7 +32,7 @@
     </ItemGroup>
 
     <Target Name="Build" DependsOnTargets="Version">
-        <MSBuild Projects="@(ProjectToBuild)" Targets="Clean;Rebuild"/>
+        <MSBuild Projects="@(ProjectToBuild)" Targets="Rebuild"/>
     </Target>
 
     <Target Name="Test" DependsOnTargets="Build">
@@ -42,51 +42,29 @@
         <NUnit ToolPath="$(Nunit)" DisableShadowCopy="true" Assemblies="@(TestAssembly)" Framework="4.0.30319" Force32Bit="true" />
     </Target>
 
-    <!-- Packaging -->
-    <Target Name="PackageCore" DependsOnTargets="Build">
+    <ItemGroup>
+        <ItemToPackage Include="Net.Core"><Name>Net.Core</Name></ItemToPackage>
+        <ItemToPackage Include="Net.Autofac"><Name>Net.Autofac</Name></ItemToPackage>
+        <ItemToPackage Include="Net.FluentMigrator"><Name>Net.FluentMigrator</Name></ItemToPackage>
+    </ItemGroup>
 
-        <PropertyGroup>
-            <PackageName>Net.Core</PackageName>
-        </PropertyGroup>
+    <Target Name="CreatePackages">
+        <Message Text="Package: %(ItemToPackage.Name)"/>
+        <MSBuild Projects ="$(MSBuildProjectFullPath)" Properties ="PackageName=%(ItemToPackage.Name)" Targets="DeletePackage" />
+        <MSBuild Projects ="$(MSBuildProjectFullPath)" Properties ="PackageName=%(ItemToPackage.Name)" Targets="CreatePackage" />
+     </Target>
 
+     <Target Name="DeletePackage" DependsOnTargets="Build">
         <ItemGroup>
             <FilesToDelete Include="$(Package)\$(PackageName)\*.nupkg"  />
         </ItemGroup>
-      
+         
         <Delete Files="@(FilesToDelete)" />
     
-        <Copy SourceFiles="$(OutputDir)\$(PackageName).dll" DestinationFolder="$(Package)\$(PackageName)\lib\net40" />
-<!--
-         <Copy SourceFiles="$(OutputDir)\$(PackageName).xml" DestinationFolder="$(Package)\$(PackageName)\lib\net40" />
- -->        
-        <GetAssemblyIdentity AssemblyFiles="$(OutputDir)\$(PackageName).dll">
-            <Output TaskParameter="Assemblies" ItemName="AsmInfo" />
-        </GetAssemblyIdentity>        
-        
-        <XmlUpdate
-            Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
-            XmlFileName="$(Package)\$(PackageName)\$(PackageName).nuspec"
-            XPath="/package/metadata/version"
-            Value="%(AsmInfo.Version)" />        
-        
-        <Exec WorkingDirectory="$(Package)\$(PackageName)" Command="$(NuGet)\NuGet.exe pack $(Package)\$(PackageName)\$(PackageName).nuspec" />
-
-        <Message Text="##teamcity[buildNumber '%(AsmInfo.Version)']" />
-    </Target>
+     </Target>
 
     <!-- Packaging -->
-    <Target Name="PackageAutofac" DependsOnTargets="Build">
-
-        <PropertyGroup>
-            <PackageName>Net.Autofac</PackageName>
-        </PropertyGroup>
-
-        <ItemGroup>
-            <FilesToDelete Include="$(Package)\$(PackageName)\*.nupkg"  />
-        </ItemGroup>
-      
-        <Delete Files="@(FilesToDelete)" />
-    
+    <Target Name="CreatePackage" DependsOnTargets="Build">
         <Copy SourceFiles="$(OutputDir)\$(PackageName).dll" DestinationFolder="$(Package)\$(PackageName)\lib\net40" />
         <GetAssemblyIdentity AssemblyFiles="$(OutputDir)\$(PackageName).dll">
             <Output TaskParameter="Assemblies" ItemName="AsmInfo" />
@@ -100,35 +78,7 @@
         
         <Exec WorkingDirectory="$(Package)\$(PackageName)" Command="$(NuGet)\NuGet.exe pack $(Package)\$(PackageName)\$(PackageName).nuspec" />
 
-        <Message Text="##teamcity[buildNumber '%(AsmInfo.Version)']" />
+        <Message Text="##[buildNumber '%(AsmInfo.Version)']" />
     </Target>
 
-        <!-- Packaging -->
-    <Target Name="PackageFluentMigrator" DependsOnTargets="Build">
-
-        <PropertyGroup>
-            <PackageName>Net.FluentMigrator</PackageName>
-        </PropertyGroup>
-
-        <ItemGroup>
-            <FilesToDelete Include="$(Package)\$(PackageName)\*.nupkg"  />
-        </ItemGroup>
-      
-        <Delete Files="@(FilesToDelete)" />
-    
-        <Copy SourceFiles="$(OutputDir)\$(PackageName).dll" DestinationFolder="$(Package)\$(PackageName)\lib\net40" />
-        <GetAssemblyIdentity AssemblyFiles="$(OutputDir)\$(PackageName).dll">
-            <Output TaskParameter="Assemblies" ItemName="AsmInfo" />
-        </GetAssemblyIdentity>        
-        
-        <XmlUpdate
-            Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
-            XmlFileName="$(Package)\$(PackageName)\$(PackageName).nuspec"
-            XPath="/package/metadata/version"
-            Value="%(AsmInfo.Version)" />        
-        
-        <Exec WorkingDirectory="$(Package)\$(PackageName)" Command="$(NuGet)\NuGet.exe pack $(Package)\$(PackageName)\$(PackageName).nuspec" />
-
-        <Message Text="##teamcity[buildNumber '%(AsmInfo.Version)']" />
-    </Target>
 </Project>
