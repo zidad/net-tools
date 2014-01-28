@@ -8,9 +8,9 @@
     <authors>Wiebe Tijsma</authors>
     <owners>Wiebe Tijsma</owners>
     <licenseUrl>https://github.com/zidad/net-tools</licenseUrl>
-    <projectUrl>https://github.com/zidad/net.tools/</projectUrl>
+    <projectUrl>https://github.com/zidad/net-tools/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Various tools to extend the .NET FrameWork</description>
+    <description>Various tools to extend Autofac</description>
     <releaseNotes>
     </releaseNotes>
     <copyright>Copyright Wiebe Tijsma 2013</copyright>

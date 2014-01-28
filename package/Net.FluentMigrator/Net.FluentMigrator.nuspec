@@ -8,7 +8,7 @@
     <authors>Wiebe Tijsma</authors>
     <owners>Wiebe Tijsma</owners>
     <licenseUrl>https://github.com/zidad/net-tools</licenseUrl>
-    <projectUrl>https://github.com/zidad/net.tools/</projectUrl>
+    <projectUrl>https://github.com/zidad/net-tools/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Various libraries to extend FluentMigrator</description>
     <releaseNotes>
