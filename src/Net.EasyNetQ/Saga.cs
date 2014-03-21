@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using EasyNetQ;
+using EasyNetQ.AutoSubscribe;
 
 namespace Net.EasyNetQ
 {
@@ -17,27 +18,40 @@ namespace Net.EasyNetQ
     }
 
     public class SagaHost<TSaga>
-        where TSaga : SagaInstanc
+        where TSaga : SagaInstance
     {
         
     }
     
-    public interface ILock<T, C>
-        where T: ICorrelatedBy<C>
+    public interface IConsumeLocked<T, C> : IConsume<T> where T : class
     {
-        IDisposable AcquireLock(T message);
     }
 
     public interface IPersistence<T, C>  
-        where T: ICorrelatedBy<C>
+        where T: ICorrelate
     {
         void Save(T message);
         void Delete(T message);
     }
 
-    public interface ICorrelatedBy<T>
+    public interface ICorrelate 
     {
-        public T 
+        object Identifier { get; }
+    }
+
+    public interface ICorrelateBy<out TIdentifier> : ICorrelate
+    {
+        new TIdentifier Identifier { get; }
+    }
+
+    public class TestMessage : ICorrelateBy<Guid>
+    {
+        object ICorrelate.Identifier
+        {
+            get { return Identifier; }
+        }
+
+        public Guid Identifier { get; private set; }
     }
 
     public interface ICorrelation

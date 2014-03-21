@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>Net.Web</id>
+    <!-- Version gets updated during the build's packaging process -->
+    <version>0.1.3.0</version>
+    <title>Net.Web</title>
+    <authors>Wiebe Tijsma</authors>
+    <owners>Wiebe Tijsma</owners>
+    <licenseUrl>https://github.com/zidad/net-tools</licenseUrl>
+    <projectUrl>https://github.com/zidad/net-tools/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Various tools to extend MVC</description>
+    <releaseNotes>
+    </releaseNotes>
+    <copyright>Copyright Wiebe Tijsma 2013</copyright>
+    <tags>C#</tags>
+    <dependencies>
+      <dependency id="Net.Core" />
+      <dependency id="Microsoft.AspNet.WebPages" />
+    </dependencies>
+  </metadata>
+</package>

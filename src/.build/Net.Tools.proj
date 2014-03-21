@@ -43,9 +43,11 @@
     </Target>
 
     <ItemGroup>
-        <ItemToPackage Include="Net.Core"><Name>Net.Core</Name></ItemToPackage>
         <ItemToPackage Include="Net.Autofac"><Name>Net.Autofac</Name></ItemToPackage>
+        <ItemToPackage Include="Net.Core"><Name>Net.Core</Name></ItemToPackage>
+        <ItemToPackage Include="Net.EasyNetQ"><Name>Net.EasyNetQ</Name></ItemToPackage>
         <ItemToPackage Include="Net.FluentMigrator"><Name>Net.FluentMigrator</Name></ItemToPackage>
+        <ItemToPackage Include="Net.Web"><Name>Net.Web</Name></ItemToPackage>
     </ItemGroup>
 
     <Target Name="CreatePackages">
