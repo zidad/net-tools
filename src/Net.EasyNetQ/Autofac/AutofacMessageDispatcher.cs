@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Autofac;
 using EasyNetQ.AutoSubscribe;
 
-namespace Net.EasyNetQ.Persistence
+namespace Net.EasyNetQ.Autofac
 {
     public class AutofacMessageDispatcher : IAutoSubscriberMessageDispatcher
     {

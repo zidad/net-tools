@@ -62,6 +62,11 @@
       <Link>Properties\Version.cs</Link>
     </Compile>
     <Compile Include="Correlation\ICorrelateBy.cs" />
+    <Compile Include="Locking\IConsumeLocked.cs" />
+    <Compile Include="Locking\ILocker.cs" />
+    <Compile Include="Locking\LockingMessageDispatcher.cs" />
+    <Compile Include="Locking\MutexLockProvider.cs" />
+    <Compile Include="Locking\Redis\RedisLockProvider.cs" />
     <Compile Include="Persistence\AutofacStatefulConsumerMessageDispatcher.cs" />
     <Compile Include="Autofac\AutofacMessageDispatcher.cs" />
     <Compile Include="Persistence\IConsumeWithState.cs" />
@@ -84,7 +89,6 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir).nuget\NuGet.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

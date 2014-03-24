@@ -33,11 +33,7 @@ namespace Net.EasyNetQ.Locking
                 return;
             }
 
-            var correlatedMessage = message as ICorrelate;
-            if (correlatedMessage == null)
-                throw new NotSupportedException("{0} implements {1} but {2} doesn't implement {3}".FormatWith(typeof(TConsumer), typeof(IConsumeLocked<>)));
-
-            using(locker.AcquireLock(correlatedMessage.Identifier))
+            using(locker.AcquireLock(GetCorrelationIdentifier<TMessage, TConsumer>(message)))
                 messageDispatcher.Dispatch<TMessage, TConsumer>(message);
         }
 
@@ -56,16 +52,38 @@ namespace Net.EasyNetQ.Locking
                 await messageDispatcher.DispatchAsync<TMessage, TConsumer>(message);
         }
 
-        private static object GetCorrelationIdentifier<TMessage, TConsumer>(TMessage message) where TMessage : class
-            where TConsumer : IConsumeAsync<TMessage>
+        private static object GetCorrelationIdentifier<TMessage, TConsumer>(TMessage message)
+            where TMessage : class
         {
-            var correlatedMessage = message as ICorrelate;
-
-            if (correlatedMessage == null)
+            Type correlationTypeId;
+            
+            if (!typeof (TMessage).IsOfGenericType(typeof (ICorrelateBy<>), out correlationTypeId))
                 throw new NotSupportedException("{0} implements {1} but {2} doesn't implement {3}".FormatWith(
                     typeof (TConsumer), typeof (IConsumeLocked<>)));
+            
+            var instance = (ICorrelationIdHandler) Activator.CreateInstance(typeof (CorrelationIdHandler<>)
+                .MakeGenericType(correlationTypeId));
+            
+            return instance.Get(message);
+        }
 
-            return correlatedMessage.Identifier;
+        class CorrelationIdHandler<TCorrelationIdType> : ICorrelationIdHandler
+        {
+            public object Get(object message)
+            {
+                return ((ICorrelateBy<TCorrelationIdType>) message).CorrelationId;
+            }
+
+            public void Set(object message, object value)
+            {
+                ((ICorrelateBy<TCorrelationIdType>)message).CorrelationId = (TCorrelationIdType) value;
+            }
+        }
+
+        interface ICorrelationIdHandler
+        {
+            object Get(object message);
+            void Set(object message, object value);
         }
     }
 }

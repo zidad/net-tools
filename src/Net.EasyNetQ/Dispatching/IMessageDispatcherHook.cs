@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using EasyNetQ.AutoSubscribe;
 
-namespace Net.EasyNetQ.Persistence
+namespace Net.EasyNetQ
 {
     public interface IMessageDispatcherHook
     {
