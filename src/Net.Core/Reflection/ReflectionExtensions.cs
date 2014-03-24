@@ -54,6 +54,11 @@ namespace Net.Reflection
             return typeDescriptor.GetAttributes().OfType<TAttribute>();
         }
 
+        /// <summary>
+        /// checks if a type is a nullable type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static bool IsNullable(this Type type)
         {
             if (!type.IsValueType)
@@ -96,11 +101,11 @@ namespace Net.Reflection
             }
         }
 
-        public static bool IsOfGenericType(this Type typeToCheck, Type genericType, out Type enumerableType)
+        public static bool IsOfGenericType(this Type typeToCheck, Type genericType, out Type genericParameterType)
         {
             while (true)
             {
-                enumerableType = null;
+                genericParameterType = null;
 
                 if (genericType == null)
                     throw new ArgumentNullException("genericType");
@@ -113,21 +118,21 @@ namespace Net.Reflection
 
                 if (typeToCheck == genericType)
                 {
-                    enumerableType = typeToCheck;
+                    genericParameterType = typeToCheck;
                     return true;
                 }
 
                 if ((typeToCheck.IsGenericType ? typeToCheck.GetGenericTypeDefinition() : typeToCheck) == genericType)
                 {
-                    enumerableType = typeToCheck;
+                    genericParameterType = typeToCheck;
                     return true;
                 }
 
                 if (genericType.IsInterface)
                 {
-                    foreach (Type i in typeToCheck.GetInterfaces())
+                    foreach (var i in typeToCheck.GetInterfaces())
                     {
-                        if (i.IsOfGenericType(genericType, out enumerableType))
+                        if (i.IsOfGenericType(genericType, out genericParameterType))
                         {
                             return true;
                         }
