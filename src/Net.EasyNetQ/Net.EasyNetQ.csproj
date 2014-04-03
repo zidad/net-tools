@@ -39,9 +39,6 @@
     <Reference Include="EasyNetQ">
       <HintPath>..\packages\EasyNetQ.0.28.3.229\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
-    <Reference Include="EasyNetQ.DI.Autofac">
-      <HintPath>..\packages\EasyNetQ.DI.Autofac.0.28.3.229\lib\net40\EasyNetQ.DI.Autofac.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -62,15 +59,19 @@
       <Link>Properties\Version.cs</Link>
     </Compile>
     <Compile Include="Correlation\ICorrelateBy.cs" />
-    <Compile Include="Locking\IConsumeLocked.cs" />
+    <Compile Include="Locking\CorrelationIdHandler.cs" />
+    <Compile Include="Locking\IConsumeLocked.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Locking\ICorrelationIdHandler.cs" />
     <Compile Include="Locking\ILocker.cs" />
-    <Compile Include="Locking\LockingMessageDispatcher.cs" />
+    <Compile Include="Locking\LockingMessageHook.cs" />
     <Compile Include="Locking\MutexLockProvider.cs" />
     <Compile Include="Locking\Redis\RedisLockProvider.cs" />
-    <Compile Include="Persistence\AutofacStatefulConsumerMessageDispatcher.cs" />
+    <Compile Include="Persistence\AutofacStatefulConsumerMessageHook.cs" />
     <Compile Include="Autofac\AutofacMessageDispatcher.cs" />
-    <Compile Include="Persistence\IConsumeWithState.cs" />
-    <Compile Include="Dispatching\IMessageDispatcherHook.cs" />
+    <Compile Include="Persistence\ISaga.cs" />
+    <Compile Include="Dispatching\IMessageHook.cs" />
     <Compile Include="Persistence\InMemoryRepository.cs" />
     <Compile Include="Persistence\IRepository.cs" />
     <Compile Include="TestConsumer.cs" />

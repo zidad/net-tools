@@ -22,7 +22,7 @@ namespace Net.EasyNetQ.Autofac
             using (var scope = component.BeginLifetimeScope("message"))
             {
                 var consumer = scope.Resolve<TConsumer>();
-                var hooks = scope.Resolve<IEnumerable<IMessageDispatcherHook>>().ToArray();
+                var hooks = scope.Resolve<IEnumerable<IMessageHook>>().ToArray();
                 foreach (var hook in hooks) 
                     hook.OnBeforeConsume<TMessage, TConsumer>(consumer, message);
                 consumer.Consume(message);
@@ -38,7 +38,7 @@ namespace Net.EasyNetQ.Autofac
             using (var scope = component.BeginLifetimeScope("async-message"))
             {
                 var consumer = scope.Resolve<TConsumer>();
-                var hooks = scope.Resolve<IEnumerable<IMessageDispatcherHook>>().ToArray();
+                var hooks = scope.Resolve<IEnumerable<IMessageHook>>().ToArray();
                 foreach (var hook in hooks) 
                     await hook.OnBeforeConsumeAsync<TMessage, TConsumer>(consumer, message);
                 await consumer.Consume(message);

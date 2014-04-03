@@ -1,6 +1,6 @@
 ﻿namespace Net.EasyNetQ.Persistence
 {
-    public interface IConsumeWithState<TState>    
+    public interface ISaga<TState>    
     {
         TState State { get; set; }
     }

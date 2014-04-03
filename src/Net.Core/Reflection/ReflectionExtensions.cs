@@ -101,11 +101,11 @@ namespace Net.Reflection
             }
         }
 
-        public static bool IsOfGenericType(this Type typeToCheck, Type genericType, out Type genericParameterType)
+        public static bool IsOfGenericType(this Type typeToCheck, Type genericType, out Type concreteGenericType)
         {
             while (true)
             {
-                genericParameterType = null;
+                concreteGenericType = null;
 
                 if (genericType == null)
                     throw new ArgumentNullException("genericType");
@@ -118,13 +118,13 @@ namespace Net.Reflection
 
                 if (typeToCheck == genericType)
                 {
-                    genericParameterType = typeToCheck;
+                    concreteGenericType = typeToCheck;
                     return true;
                 }
 
                 if ((typeToCheck.IsGenericType ? typeToCheck.GetGenericTypeDefinition() : typeToCheck) == genericType)
                 {
-                    genericParameterType = typeToCheck;
+                    concreteGenericType = typeToCheck;
                     return true;
                 }
 
@@ -132,7 +132,7 @@ namespace Net.Reflection
                 {
                     foreach (var i in typeToCheck.GetInterfaces())
                     {
-                        if (i.IsOfGenericType(genericType, out genericParameterType))
+                        if (i.IsOfGenericType(genericType, out concreteGenericType))
                         {
                             return true;
                         }

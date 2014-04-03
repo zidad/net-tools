@@ -9,14 +9,35 @@ namespace Net.EasyNetQ.Locking
     {
         public IDisposable AcquireLock(object identifier)
         {
-            var mutex = new Mutex(true, identifier.To<string>());
-            mutex.WaitOne();
-            return mutex;
+            bool createdNew;
+            
+            var mutex = new Mutex(true, identifier.To<string>(), out createdNew);
+            
+            if (!createdNew)
+                mutex.WaitOne(2000);
+            
+            //return mutex;
+            return new DisposableAction(()=> { mutex.ReleaseMutex(); });
         }
 
         public Task<IDisposable> AcquireLockAsync(object identifier)
         {
             return Task.Factory.StartNew(() => AcquireLock(identifier));
+        }
+    }
+
+    public class DisposableAction : IDisposable
+    {
+        private readonly Action dispose;
+
+        public DisposableAction(Action dispose)
+        {
+            this.dispose = dispose;
+        }
+
+        public void Dispose()
+        {
+            dispose();
         }
     }
 }

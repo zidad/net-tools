@@ -6,12 +6,12 @@ using Net.Reflection;
 
 namespace Net.EasyNetQ.Persistence
 {
-    public class AutofacStatefulConsumerMessageDispatcher : IMessageDispatcherHook
+    public class AutofacStatefulConsumerMessageHook : IMessageHook
     {
         private readonly IComponentContext context;
         private ICorrelatedStateHandler handler;
 
-        public AutofacStatefulConsumerMessageDispatcher(IComponentContext context)
+        public AutofacStatefulConsumerMessageHook(IComponentContext context)
         {
             this.context = context;
         }
@@ -28,7 +28,7 @@ namespace Net.EasyNetQ.Persistence
         {
             Type stateType;
 
-            if (!typeof(TConsumer).IsOfGenericType(typeof(IConsumeWithState<>), out stateType))
+            if (!typeof(TConsumer).IsOfGenericType(typeof(ISaga<>), out stateType))
                 return false;
 
             Type correlationIdType;
@@ -94,9 +94,9 @@ namespace Net.EasyNetQ.Persistence
                 return ((ICorrelateBy<TCorrelationId>)message).CorrelationId;
             }
 
-            private static IConsumeWithState<TState> Consumer(object consumer)
+            private static ISaga<TState> Consumer(object consumer)
             {
-                return ((IConsumeWithState<TState>)consumer);
+                return ((ISaga<TState>)consumer);
             }
         }
 

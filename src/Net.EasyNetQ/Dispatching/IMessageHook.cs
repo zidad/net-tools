@@ -3,7 +3,7 @@ using EasyNetQ.AutoSubscribe;
 
 namespace Net.EasyNetQ
 {
-    public interface IMessageDispatcherHook
+    public interface IMessageHook
     {
         void OnBeforeConsume<TMessage, TConsumer>(IConsume<TMessage> consumer, TMessage message)
             where TMessage : class

@@ -31,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.3.3.0\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="EasyNetQ, Version=0.28.3.229, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EasyNetQ.0.28.3.229\lib\net40\EasyNetQ.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -46,6 +54,7 @@
     <Compile Include="Core\TypeIsOfGenericTypeFixture.cs" />
     <Compile Include="Core\ToExtensionsFixture.cs" />
     <Compile Include="Core\TypeIsOfNullableFixture.cs" />
+    <Compile Include="EasyNetQ\LockingConsumerTests.cs" />
     <Compile Include="TestClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -54,13 +63,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Autofac\" />
-    <Folder Include="EasyNetQ\" />
     <Folder Include="FluentMigrator\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Net.Core\Net.Core.csproj">
       <Project>{BBA0A9E7-2819-4ADA-94DB-BF5F3C5A6E1E}</Project>
       <Name>Net.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Net.EasyNetQ\Net.EasyNetQ.csproj">
+      <Project>{547110D9-66C4-485A-BEE1-CF9142EB4923}</Project>
+      <Name>Net.EasyNetQ</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

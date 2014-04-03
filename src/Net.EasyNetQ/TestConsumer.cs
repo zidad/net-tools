@@ -1,21 +1,25 @@
 using System;
+using System.Threading;
+using EasyNetQ.AutoSubscribe;
 
 namespace Net.EasyNetQ.Persistence
 {
     public class TestConsumer : 
-        IConsumeWithState<TestSagaInstance>//, 
-        //IConsumeLocked<TestMessage>
+        ISaga<TestSagaInstance>, 
+        IConsumeLocked<TestMessage>
     {
         public TestSagaInstance State { get; set; }
         
         public void Consume(TestMessage message)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Executing: " + message.CorrelationId);
+            Thread.Sleep(1000);
+            Console.WriteLine("Executed: " + message.CorrelationId);
         }
     }
 
-    public class TestSagaInstance : ICorrelateBy<Guid>
+    public class TestSagaInstance : ICorrelateBy<int>
     {
-        public Guid CorrelationId { get; set; }
+        public int CorrelationId { get; set; }
     }
 }
