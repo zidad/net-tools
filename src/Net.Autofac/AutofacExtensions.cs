@@ -5,6 +5,7 @@ using Autofac;
 using Autofac.Builder;
 using Autofac.Core;
 using Autofac.Features.Scanning;
+using Net.Reflection;
 
 namespace Net.Autofac
 {
@@ -16,6 +17,19 @@ namespace Net.Autofac
                 .SelectMany(r => r.Services.OfType<IServiceWithType>(), (r, s) => new { r, s });
 
             var implementations = registrations.Where(rs => rs.s.ServiceType.IsAssignableTo<T>())
+                .Select(rs => rs.r.Activator.LimitType)
+                .Distinct()
+                .ToList();
+
+            return implementations;
+        }
+
+        public static IEnumerable<Type> ImplementationsForGenericType(this IComponentContext components, Type type)
+        {
+            var registrations = components.ComponentRegistry.Registrations
+                .SelectMany(r => r.Services.OfType<IServiceWithType>(), (r, s) => new { r, s });
+
+            var implementations = registrations.Where(rs => rs.s.ServiceType.IsOfGenericType(type))
                 .Select(rs => rs.r.Activator.LimitType)
                 .Distinct()
                 .ToList();

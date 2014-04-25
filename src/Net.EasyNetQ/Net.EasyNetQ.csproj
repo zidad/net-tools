@@ -59,11 +59,11 @@
       <Link>Properties\Version.cs</Link>
     </Compile>
     <Compile Include="Correlation\ICorrelateBy.cs" />
-    <Compile Include="Locking\CorrelationIdHandler.cs" />
+    <Compile Include="Correlation\CorrelationIdHandler.cs" />
     <Compile Include="Locking\IConsumeLocked.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Locking\ICorrelationIdHandler.cs" />
+    <Compile Include="Correlation\ICorrelationIdHandler.cs" />
     <Compile Include="Locking\ILocker.cs" />
     <Compile Include="Locking\LockingMessageHook.cs" />
     <Compile Include="Locking\MutexLockProvider.cs" />
