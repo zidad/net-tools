@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
@@ -41,6 +42,8 @@
     </Compile>
     <Compile Include="Collections\EnumerableExtensions.cs" />
     <Compile Include="Collections\PropertyEqualityComparer.cs" />
+    <Compile Include="Enums\Enum.cs" />
+    <Compile Include="Enums\EnumList.cs" />
     <Compile Include="Reflection\AssemblyPreloader.cs" />
     <Compile Include="Reflection\AssemblyPreloaderSettings.cs" />
     <Compile Include="Properties\Annotations.cs" />
