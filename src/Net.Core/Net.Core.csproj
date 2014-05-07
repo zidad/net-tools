@@ -42,6 +42,8 @@
     </Compile>
     <Compile Include="Collections\EnumerableExtensions.cs" />
     <Compile Include="Collections\PropertyEqualityComparer.cs" />
+    <Compile Include="CommandLine\CommandLineUtilities.cs" />
+    <Compile Include="CommandLine\ICommandLineTask.cs" />
     <Compile Include="Enums\Enum.cs" />
     <Compile Include="Enums\EnumList.cs" />
     <Compile Include="Reflection\AssemblyPreloader.cs" />

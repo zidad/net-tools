@@ -64,5 +64,17 @@ namespace Net.Text
         {
             return Contains(source, toCheck, StringComparison.CurrentCultureIgnoreCase);
         }
+
+        /// <summary>
+        /// adds a suffix, prefix or both to a string.
+        /// Returns the defaultValue for (string.Empty by default) if value is empty or null
+        /// </summary>
+        public static string Wrap(this string value, string prefix = "", string suffix = "", string defaultValue = "")
+        {
+            if (value.HasNoValue())
+                return defaultValue;
+
+            return string.Concat(prefix, value, suffix);
+        }
     }
 }
