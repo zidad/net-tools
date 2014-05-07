@@ -60,20 +60,25 @@
     </Compile>
     <Compile Include="Correlation\ICorrelateBy.cs" />
     <Compile Include="Correlation\CorrelationIdHandler.cs" />
+    <Compile Include="Generation\IKeyGenerator.cs" />
     <Compile Include="Locking\IConsumeLocked.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Correlation\ICorrelationIdHandler.cs" />
     <Compile Include="Locking\ILocker.cs" />
+    <Compile Include="Locking\InProcessLockProvider.cs" />
     <Compile Include="Locking\LockingMessageHook.cs" />
     <Compile Include="Locking\MutexLockProvider.cs" />
     <Compile Include="Locking\Redis\RedisLockProvider.cs" />
     <Compile Include="Persistence\AutofacStatefulConsumerMessageHook.cs" />
     <Compile Include="Autofac\AutofacMessageDispatcher.cs" />
+    <Compile Include="Generation\IntGenerator.cs" />
     <Compile Include="Persistence\ISaga.cs" />
     <Compile Include="Dispatching\IMessageHook.cs" />
     <Compile Include="Persistence\InMemoryRepository.cs" />
     <Compile Include="Persistence\IRepository.cs" />
+    <Compile Include="Persistence\KeyGeneratingMemoryRepository.cs" />
+    <Compile Include="Generation\StringGenerator.cs" />
     <Compile Include="TestConsumer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestMessage.cs" />

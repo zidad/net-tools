@@ -4,12 +4,12 @@ namespace Net.EasyNetQ.Locking
     {
         public object Get(object message)
         {
-            return ((ICorrelateBy<TCorrelationIdType>) message).CorrelationId;
+            return ((ICorrelateBy<TCorrelationIdType>) message).Id;
         }
 
         public void Set(object message, object value)
         {
-            ((ICorrelateBy<TCorrelationIdType>)message).CorrelationId = (TCorrelationIdType) value;
+            ((ICorrelateBy<TCorrelationIdType>)message).Id = (TCorrelationIdType) value;
         }
     }
     
@@ -17,7 +17,7 @@ namespace Net.EasyNetQ.Locking
     {
         public object Get(object message)
         {
-            return ((ICorrelateBy<TCorrelationIdType>) message).CorrelationId;
+            return ((ICorrelateBy<TCorrelationIdType>) message).Id;
         }
 
         void ICorrelationIdHandler<TCorrelationIdType>.Set(object message, TCorrelationIdType value)
@@ -32,7 +32,7 @@ namespace Net.EasyNetQ.Locking
 
         public void Set(object message, object value)
         {
-            ((ICorrelateBy<TCorrelationIdType>)message).CorrelationId = (TCorrelationIdType) value;
+            ((ICorrelateBy<TCorrelationIdType>)message).Id = (TCorrelationIdType) value;
         }
     }*/
 }

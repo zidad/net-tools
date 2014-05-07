@@ -18,7 +18,7 @@ namespace Net.Tests.EasyNetQ
         public void SetUp()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<MutexLockProvider>().As<ILocker>();
+            builder.RegisterType<InProcessLockProvider>().As<ILocker>().SingleInstance();
             builder.RegisterType<LockingMessageHook>().As<IMessageHook>();
             builder.RegisterType<TestConsumer>();
             
@@ -35,7 +35,7 @@ namespace Net.Tests.EasyNetQ
             Parallel.For(0, 3, delegate(int i) 
             {
                 Console.WriteLine("Started: " + i);
-                dispatcher.Dispatch<TestMessage, TestConsumer>(new TestMessage { CorrelationId = correlationId });
+                dispatcher.Dispatch<TestMessage, TestConsumer>(new TestMessage { Id = correlationId });
                 Console.WriteLine("Ended: " + i);
             });
         }

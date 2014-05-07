@@ -76,7 +76,7 @@ namespace Net.EasyNetQ.Persistence
 
             public void SaveState(object consumer, object message)
             {
-                repository.Set(CorrelationId(message), Consumer(consumer).State);
+                repository.Set(Consumer(consumer).State);
             }
 
             public async Task LoadStateAsync(object consumer, object message)
@@ -86,12 +86,12 @@ namespace Net.EasyNetQ.Persistence
 
             public async Task SaveStateAsync(object consumer, object message)
             {
-                await repository.SetAsync((TCorrelationId) message, Consumer(consumer).State);
+                await repository.SetAsync(Consumer(consumer).State);
             }
 
             private static TCorrelationId CorrelationId(object message)
             {
-                return ((ICorrelateBy<TCorrelationId>)message).CorrelationId;
+                return ((ICorrelateBy<TCorrelationId>)message).Id;
             }
 
             private static ISaga<TState> Consumer(object consumer)

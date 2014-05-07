@@ -1,42 +1,57 @@
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Net.EasyNetQ.Persistence
 {
-    public class InMemoryRepository<TKey, TState> : IRepository<TKey, TState> 
-        where TState : ICorrelateBy<TKey>, new()
+
+    public class InMemoryRepository<TKey, TState> : IRepository<TKey, TState>
+    where TState : ICorrelateBy<TKey>, new()
     {
-        private readonly ConcurrentDictionary<TKey, TState> store = new ConcurrentDictionary<TKey, TState>();
+        private readonly ConcurrentDictionary<TKey, TState> _store = new ConcurrentDictionary<TKey, TState>();
 
-        public TState Get(TKey key)
+        public virtual IQueryable<TState> GetAll()
         {
-            return store.GetOrAdd(key, o => new TState());
+            return _store.Values.AsQueryable();
         }
 
-        public void Set(TKey key, TState state)
+        public virtual TState Get(TKey key)
         {
-            store.AddOrUpdate(key, o => state, (o,k) => state);
+            return _store.GetOrAdd(key, o => new TState());
         }
 
-        public void Remove(TKey key)
+        public virtual TKey Set(TState state)
+        {
+            _store.AddOrUpdate(state.Id, o => state, (o, k) => state);
+
+            return state.Id;
+        }
+
+        public virtual TState Remove(TKey key)
         {
             TState value;
-            store.TryRemove(key, out value);
+            _store.TryRemove(key, out value);
+            return value;
         }
 
-        public Task<TState> GetAsync(TKey key)
+        public virtual Task<IQueryable<TState>> GetAllAsync()
         {
-            return Task.Run(()=>Get(key));
+            return Task.FromResult(GetAll());
         }
 
-        public Task SetAsync(TKey key, TState state)
+        public virtual Task<TState> GetAsync(TKey key)
         {
-            return Task.Run(() => Set(key, state));
+            return Task.FromResult(Get(key));
         }
 
-        public Task RemoveAsync(TKey key)
+        public virtual Task<TKey> SetAsync(TState state)
         {
-            return Task.Run(() => Remove(key));
+            return Task.FromResult(Set(state));
+        }
+
+        public virtual Task<TState> RemoveAsync(TKey key)
+        {
+            return Task.FromResult(Remove(key));
         }
     }
 }

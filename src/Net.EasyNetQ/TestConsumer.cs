@@ -12,14 +12,14 @@ namespace Net.EasyNetQ.Persistence
         
         public void Consume(TestMessage message)
         {
-            Console.WriteLine("Executing: " + message.CorrelationId);
+            Console.WriteLine("Executing: " + message.Id);
             Thread.Sleep(1000);
-            Console.WriteLine("Executed: " + message.CorrelationId);
+            Console.WriteLine("Executed: " + message.Id);
         }
     }
 
     public class TestSagaInstance : ICorrelateBy<int>
     {
-        public int CorrelationId { get; set; }
+        public int Id { get; set; }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface ICorrelateBy<TIdentifier>
     {
-        TIdentifier CorrelationId { get; set; }
+        TIdentifier Id { get; set; }
     }
 }

@@ -1,43 +1,46 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Net.Annotations;
 using Net.System;
 
 namespace Net.EasyNetQ.Locking
 {
+    [UsedImplicitly]
     public class MutexLockProvider : ILocker
     {
+        private bool owned;
+        private Mutex mutex;
+
         public IDisposable AcquireLock(object identifier)
         {
-            bool createdNew;
-            
-            var mutex = new Mutex(true, identifier.To<string>(), out createdNew);
-            
-            if (!createdNew)
+            do
+            {
+                mutex = new Mutex(true, identifier.To<string>(), out owned);
                 mutex.WaitOne(2000);
-            
-            //return mutex;
-            return new DisposableAction(()=> { mutex.ReleaseMutex(); });
+            } while (!owned);
+
+            return new DisposeAction(()=> mutex.ReleaseMutex());
         }
 
         public Task<IDisposable> AcquireLockAsync(object identifier)
         {
-            return Task.Factory.StartNew(() => AcquireLock(identifier));
+            return Task.FromResult(AcquireLock(identifier));
         }
     }
 
-    public class DisposableAction : IDisposable
+    public class DisposeAction : IDisposable
     {
-        private readonly Action dispose;
+        private readonly Action disposeAction;
 
-        public DisposableAction(Action dispose)
+        public DisposeAction(Action disposeAction)
         {
-            this.dispose = dispose;
+            this.disposeAction = disposeAction;
         }
 
         public void Dispose()
         {
-            dispose();
+            disposeAction();
         }
     }
 }

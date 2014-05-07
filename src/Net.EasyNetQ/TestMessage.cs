@@ -4,6 +4,6 @@ namespace Net.EasyNetQ
 {
     public class TestMessage : ICorrelateBy<Guid>
     {
-        public Guid CorrelationId { get; set; }
+        public Guid Id { get; set; }
     }
 }
