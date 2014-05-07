@@ -29,8 +29,7 @@ namespace Net.Tests.EasyNetQ
         public void TestLocking()
         {
             var dispatcher = new AutofacMessageDispatcher(Container);
-
-            Guid correlationId = Guid.NewGuid();
+            var correlationId = Guid.NewGuid();
 
             Parallel.For(0, 3, delegate(int i) 
             {

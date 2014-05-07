@@ -51,11 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\EnumFixture.cs" />
     <Compile Include="Core\TypeIsOfGenericTypeFixture.cs" />
     <Compile Include="Core\ToExtensionsFixture.cs" />
     <Compile Include="Core\TypeIsOfNullableFixture.cs" />
     <Compile Include="EasyNetQ\LockingConsumerTests.cs" />
-    <Compile Include="TestClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
