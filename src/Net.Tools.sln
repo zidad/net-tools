@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleConsoleApplication", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{9EAF4C6F-1781-4B22-8244-0E88ED1958D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleNancyFrontend", "SampleNancyFrontend\SampleNancyFrontend.csproj", "{3AD605E7-5DF5-4E00-AD85-851AD0B6FEDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,11 +73,16 @@ Global
 		{FC70FF0E-90BA-4CA8-92FD-FD9139E09DFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC70FF0E-90BA-4CA8-92FD-FD9139E09DFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC70FF0E-90BA-4CA8-92FD-FD9139E09DFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AD605E7-5DF5-4E00-AD85-851AD0B6FEDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AD605E7-5DF5-4E00-AD85-851AD0B6FEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AD605E7-5DF5-4E00-AD85-851AD0B6FEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AD605E7-5DF5-4E00-AD85-851AD0B6FEDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FC70FF0E-90BA-4CA8-92FD-FD9139E09DFC} = {9EAF4C6F-1781-4B22-8244-0E88ED1958D2}
+		{3AD605E7-5DF5-4E00-AD85-851AD0B6FEDA} = {9EAF4C6F-1781-4B22-8244-0E88ED1958D2}
 	EndGlobalSection
 EndGlobal

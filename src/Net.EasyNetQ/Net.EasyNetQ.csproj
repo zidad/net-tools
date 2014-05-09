@@ -81,6 +81,9 @@
     <Compile Include="Persistence\IRepository.cs" />
     <Compile Include="Persistence\KeyGeneratingMemoryRepository.cs" />
     <Compile Include="Generation\StringGenerator.cs" />
+    <Compile Include="Subscribing\AdvancedAutoSubscriber.cs" />
+    <Compile Include="Subscribing\AdvancedSubscriptionConfiguration.cs" />
+    <Compile Include="Subscribing\IAdvancedSubscriptionConfiguration.cs" />
     <Compile Include="TestConsumer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestMessage.cs" />

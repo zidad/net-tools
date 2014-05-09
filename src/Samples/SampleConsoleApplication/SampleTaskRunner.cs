@@ -5,13 +5,11 @@ using System.Threading.Tasks;
 using Autofac;
 using Net.Autofac;
 using Net.Autofac.CommandLine;
-using Net.DependencyInjection;
 using Serilog;
 using Serilog.Enrichers;
 
 namespace SampleConsoleApplication
 {
-    [Register(Ignore = true)]
     public class SampleTaskRunner : IDisposable
     {
         private CancellationTokenSource cancellationTokenSource;
