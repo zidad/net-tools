@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
@@ -13,12 +12,12 @@ using Net.Annotations;
 namespace Net.EasyNetQ.Subscribing
 {
     /// <summary>
-    /// this is a copy from the Autofac project that adds Transient and Autodelete queues to the possibilities
+    /// this is a copy from the EasyNetQ project that adds non-durable and autodelete queues
     /// </summary>
     public class AdvancedAutoSubscriber : AutoSubscriber
     {
-        private readonly IConventions _conventions;
-        private readonly IAdvancedBus _advancedBus;
+        private readonly IConventions conventions;
+        private readonly IAdvancedBus advancedBus;
 
         public delegate AdvancedAutoSubscriber Factory(string subscriptionIdPrefix);
 
@@ -27,8 +26,8 @@ namespace Net.EasyNetQ.Subscribing
         public AdvancedAutoSubscriber(string subscriptionIdPrefix, IBus bus, IConventions conventions)
             : base(bus, subscriptionIdPrefix)
         {
-            _conventions = conventions;
-            _advancedBus = bus.Advanced;
+            this.conventions = conventions;
+            advancedBus = bus.Advanced;
 
             SubscriptionConfiguration = (configuration, subscriber) => { };
         }
@@ -112,20 +111,20 @@ namespace Net.EasyNetQ.Subscribing
             var configuration = new AdvancedSubscriptionConfiguration();
             configure(configuration);
 
-            var queueName = _conventions.QueueNamingConvention(type, subscriptionId);
-            var exchangeName = _conventions.ExchangeNamingConvention(type);
+            var queueName = conventions.QueueNamingConvention(type, subscriptionId);
+            var exchangeName = conventions.ExchangeNamingConvention(type);
 
-            var queue = _advancedBus.QueueDeclare(queueName, durable: configuration.Durable, autoDelete: configuration.AutoDelete);
-            var exchange = _advancedBus.ExchangeDeclare(exchangeName, ExchangeType.Topic);
+            var queue = advancedBus.QueueDeclare(queueName, durable: configuration.Durable, autoDelete: configuration.AutoDelete);
+            var exchange = advancedBus.ExchangeDeclare(exchangeName, ExchangeType.Topic);
 
             foreach (var topic in configuration.Topics.AtLeastOneWithDefault("#"))
             {
-                _advancedBus.Bind(exchange, queue, topic);
+                advancedBus.Bind(exchange, queue, topic);
             }
 
             Func<IMessage<object>, MessageReceivedInfo, Task> oms = (message, messageRecievedInfo) => onMessage(message.Body);
 
-            return _advancedBus.Consume(queue, x => x.Add(oms));
+            return advancedBus.Consume(queue, x => x.Add(oms));
         }
 
         private Action<IAdvancedSubscriptionConfiguration> TopicInfo(AutoSubscriberConsumerInfo subscriptionInfo)
