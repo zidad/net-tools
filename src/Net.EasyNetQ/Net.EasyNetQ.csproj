@@ -55,27 +55,44 @@
     <Compile Include="..\Version.cs">
       <Link>Properties\Version.cs</Link>
     </Compile>
+    <Compile Include="Autofac\AttributeErrorHandlerBuilder.cs" />
+    <Compile Include="Autofac\AttributePipeBuilder.cs" />
+    <Compile Include="ErrorHandling\ErrorHandlerAttribute.cs" />
+    <Compile Include="Autofac\AutofacGlobalErrorHandlerBuilder.cs" />
+    <Compile Include="Autofac\AutofacGlobalPipeBuilder.cs" />
+    <Compile Include="ErrorHandling\IErrorHandler.cs" />
+    <Compile Include="ErrorHandling\IErrorHandlerBuilder.cs" />
+    <Compile Include="ErrorHandling\IRetryCount.cs" />
+    <Compile Include="ErrorHandling\MessageRetryException.cs" />
+    <Compile Include="ErrorHandling\RetryFailedPermanentlyException.cs" />
+    <Compile Include="ErrorHandling\RetryStrategy.cs" />
+    <Compile Include="Pipes\IPipeBuilder.cs" />
+    <Compile Include="Pipes\PipeAttribute.cs" />
+    <Compile Include="Correlation\CorrelatedStateHandler.cs" />
     <Compile Include="Correlation\ICorrelateBy.cs" />
     <Compile Include="Correlation\CorrelationIdHandler.cs" />
-    <Compile Include="Generation\IKeyGenerator.cs" />
+    <Compile Include="Correlation\ICorrelatedStateHandler.cs" />
+    <Compile Include="Sagas\ISaga.cs" />
+    <Compile Include="Sagas\SimpleSagaPipe.cs" />
+    <Compile Include="KeyGeneration\IKeyGenerator.cs" />
     <Compile Include="Locking\IConsumeLocked.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Correlation\ICorrelationIdHandler.cs" />
     <Compile Include="Locking\ILocker.cs" />
     <Compile Include="Locking\InProcessLockProvider.cs" />
-    <Compile Include="Locking\LockingMessageHook.cs" />
+    <Compile Include="Locking\LockingPipe.cs" />
     <Compile Include="Locking\MutexLockProvider.cs" />
     <Compile Include="Locking\Redis\RedisLockProvider.cs" />
-    <Compile Include="Persistence\AutofacStatefulConsumerMessageHook.cs" />
     <Compile Include="Autofac\AutofacMessageDispatcher.cs" />
-    <Compile Include="Generation\IntGenerator.cs" />
+    <Compile Include="KeyGeneration\IntGenerator.cs" />
     <Compile Include="Persistence\ISaga.cs" />
-    <Compile Include="Dispatching\IMessageHook.cs" />
+    <Compile Include="Pipes\IPipe.cs" />
     <Compile Include="Persistence\InMemoryRepository.cs" />
     <Compile Include="Persistence\IRepository.cs" />
     <Compile Include="Persistence\KeyGeneratingMemoryRepository.cs" />
-    <Compile Include="Generation\StringGenerator.cs" />
+    <Compile Include="KeyGeneration\StringGenerator.cs" />
+    <Compile Include="Persistence\RepositoryExtensions.cs" />
     <Compile Include="Subscribing\AdvancedAutoSubscriber.cs" />
     <Compile Include="Subscribing\AdvancedSubscriptionConfiguration.cs" />
     <Compile Include="Subscribing\GenericAutoSubscriber.cs" />

@@ -19,7 +19,7 @@ namespace Net.Tests.EasyNetQ
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<InProcessLockProvider>().As<ILocker>().SingleInstance();
-            builder.RegisterType<LockingMessageHook>().As<IMessageHook>();
+            builder.RegisterType<LockingPipe>().As<IPipe>();
             builder.RegisterType<TestConsumer>();
             
             Container = builder.Build();
