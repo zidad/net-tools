@@ -78,6 +78,7 @@
     <Compile Include="Generation\StringGenerator.cs" />
     <Compile Include="Subscribing\AdvancedAutoSubscriber.cs" />
     <Compile Include="Subscribing\AdvancedSubscriptionConfiguration.cs" />
+    <Compile Include="Subscribing\GenericAutoSubscriber.cs" />
     <Compile Include="Subscribing\IAdvancedSubscriptionConfiguration.cs" />
     <Compile Include="TestConsumer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,6 +87,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Net.Core\Net.Core.csproj">

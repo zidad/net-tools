@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
@@ -58,7 +60,8 @@ namespace Net.Autofac.CommandLine
                         var paramType = concreteType.GetGenericArguments()[0];
                         var methodInfo = task.GetType()
                             .GetMethod("Run", new Type[] { paramType, typeof(CancellationToken) });
-                        var parameterName = methodInfo.GetParameters()[0].Name.ToPascalCase();
+                        var parameterInfo = methodInfo.GetParameters()[0];
+                        var parameterName = parameterInfo.GetCustomAttribute<DescriptionAttribute>().Get(d => d.Description, parameterInfo.Name);
                         var parameters = CommandLineUtilities.ReadObject(paramType, parameterName);
                         await (Task)methodInfo.Invoke(task, new[] { parameters, cancellationToken });
                     }

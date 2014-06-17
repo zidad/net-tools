@@ -140,7 +140,8 @@ namespace Net.Collections
             }
         }
 
-        static public IEnumerable<IEnumerable<T>> Batch<T>(this IEnumerable<T> source, int batchSize) // Stolen from http://www.make-awesome.com/2010/08/batch-or-partition-a-collection-with-linq/
+        // Stolen from http://www.make-awesome.com/2010/08/batch-or-partition-a-collection-with-linq/
+        static public IEnumerable<IEnumerable<T>> Batch<T>(this IEnumerable<T> source, int batchSize) 
         {
             var batch = new List<T>(batchSize);
 
@@ -227,14 +228,6 @@ namespace Net.Collections
             if (second == null) throw new ArgumentNullException("second");
             if (predicate == null) throw new ArgumentNullException("predicate");
             return first.Except(new[] { second }, predicate);
-        }
-
-        public static IEnumerable<T> Union<T>(this IEnumerable<T> first, T second)
-        {
-            if (first == null) throw new ArgumentNullException("first");
-            foreach (var value in first)
-                yield return value;
-            yield return second;
         }
 
         public static IEnumerable<T> Union<T, TProperty>(this IEnumerable<T> first, IEnumerable<T> second, Func<T, TProperty> getter)
@@ -364,5 +357,65 @@ namespace Net.Collections
 
             return first;
         }
+
+        /// <summary>
+        /// This will recurse through a tree of items and return it as a flat IEnumerable[Recursive[T]]
+        /// bug: there's an issue with this method, the 'NextSibling' will only be set after the next item has been enumerated.
+        /// Make sure to enumerate through the entire list (call something like 'ToList()') if you require the 'NextSibling' property to be set.
+        /// </summary>
+        public static IEnumerable<Recursive<T>> SelectRecursive<T>(this IEnumerable<T> items, Func<T, IEnumerable<T>> childSelector)
+        {
+            if (items == null) throw new ArgumentNullException("items");
+            if (childSelector == null) throw new ArgumentNullException("childSelector");
+            return SelectRecursive(items, childSelector, null, 0);
+        }
+
+        /// <summary>
+        /// See limitations of SelectRecursive[T]()
+        /// </summary>
+        private static IEnumerable<Recursive<T>> SelectRecursive<T>(IEnumerable<T> items, Func<T, IEnumerable<T>> childSelector, Recursive<T> parent, int depth)
+        {
+            if (items == null) throw new ArgumentNullException("items");
+            if (childSelector == null) throw new ArgumentNullException("childSelector");
+
+            int indexInParent = 0;
+            Recursive<T> previous = null;
+
+            foreach (var item in items)
+            {
+                var newItem = new Recursive<T>
+                {
+                    Item = item,
+                    Parent = parent,
+                    PreviousSibling = previous,
+                    Depth = depth,
+                    IndexInParent = indexInParent,
+                };
+
+                //hack:we probably should read one item in advance, modifying an item that has already been returned is evil
+                if (previous != null)
+                    previous.NextSibling = newItem;
+
+                yield return newItem;
+
+                foreach (var childItem in SelectRecursive(childSelector(item), childSelector, newItem, depth + 1))
+                    yield return childItem;
+
+                previous = newItem;
+                indexInParent++;
+            }
+        }
+
+
+        public class Recursive<T>
+        {
+            public int Depth { get; set; }
+            public int IndexInParent { get; set; }
+            public T Item { get; set; }
+            public Recursive<T> Parent { get; set; }
+            public Recursive<T> PreviousSibling { get; set; }
+            public Recursive<T> NextSibling { get; set; }
+        }
+
     }
 }
