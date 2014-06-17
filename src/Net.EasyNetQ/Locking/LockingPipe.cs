@@ -8,18 +8,18 @@ using Net.Text;
 namespace Net.EasyNetQ.Locking
 {
     [UsedImplicitly]
-    public class LockingMessageHook : IMessageHook, IDisposable
+    public class LockingPipe : IPipe, IDisposable
     {
         private readonly ILocker locker;
         private IDisposable _lock;
 
-        public LockingMessageHook ([NotNull] ILocker locker)
+        public LockingPipe ([NotNull] ILocker locker)
         {
             if (locker == null) throw new ArgumentNullException("locker");
             this.locker = locker;
         }
 
-        private object GetCorrelationIdentifier<TMessage, TConsumer>(TMessage message)
+        private static object GetCorrelationIdentifier<TMessage, TConsumer>(TMessage message)
             where TMessage : class
         {
             Type concreteCorrelateByType;
@@ -33,7 +33,9 @@ namespace Net.EasyNetQ.Locking
             return handler.Get(message);
         }
 
-        public void OnBeforeConsume<TMessage, TConsumer>(IConsume<TMessage> consumer, TMessage message) where TMessage : class where TConsumer : IConsume<TMessage>
+        public void OnBeforeConsume<TMessage, TConsumer>(TConsumer consumer, TMessage message) 
+            where TMessage : class 
+            where TConsumer : IConsume<TMessage>
         {
             var requiresLocking = typeof(TConsumer).IsOfGenericType(typeof(IConsumeLocked<>));
             if (!requiresLocking)
@@ -42,7 +44,9 @@ namespace Net.EasyNetQ.Locking
             _lock = locker.AcquireLock(GetCorrelationIdentifier<TMessage, TConsumer>(message));
         }
 
-        public void OnAfterConsume<TMessage, TConsumer>(IConsume<TMessage> consumer, TMessage message) where TMessage : class where TConsumer : IConsume<TMessage>
+        public void OnAfterConsume<TMessage, TConsumer>(TConsumer consumer, TMessage message, Exception exception) 
+            where TMessage : class 
+            where TConsumer : IConsume<TMessage>
         {
             Dispose();
         }
@@ -53,7 +57,9 @@ namespace Net.EasyNetQ.Locking
                 _lock.Dispose();
         }
 
-        public async Task OnBeforeConsumeAsync<TMessage, TConsumer>(IConsumeAsync<TMessage> consumer, TMessage message) where TMessage : class where TConsumer : IConsumeAsync<TMessage>
+        public async Task OnBeforeConsumeAsync<TMessage, TConsumer>(TConsumer consumer, TMessage message)
+            where TMessage : class
+            where TConsumer : IConsumeAsync<TMessage>
         {
             var requiresLocking = typeof(TConsumer).IsOfGenericType(typeof(IConsumeLocked<>));
             if (!requiresLocking)
@@ -62,14 +68,14 @@ namespace Net.EasyNetQ.Locking
             _lock = await locker.AcquireLockAsync(GetCorrelationIdentifier<TMessage, TConsumer>(message));
         }
 
-        public Task OnAfterConsumeAsync<TMessage, TConsumer>(IConsumeAsync<TMessage> consumer, TMessage message) where TMessage : class where TConsumer : IConsumeAsync<TMessage>
+        public Task OnAfterConsumeAsync<TMessage, TConsumer>(TConsumer consumer, TMessage message, Exception exception)
+            where TMessage : class
+            where TConsumer : IConsumeAsync<TMessage>
         {
-            return Task.Factory.StartNew(() =>
-            {
-                if (_lock != null)
-                    _lock.Dispose();
-            });
+            if (_lock != null)
+                _lock.Dispose();
 
+            return Task.FromResult(0);
         }
     }
 }

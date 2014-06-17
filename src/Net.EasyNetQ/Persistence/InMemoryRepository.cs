@@ -4,9 +4,8 @@ using System.Threading.Tasks;
 
 namespace Net.EasyNetQ.Persistence
 {
-
     public class InMemoryRepository<TKey, TState> : IRepository<TKey, TState>
-    where TState : ICorrelateBy<TKey>, new()
+        where TState : ICorrelateBy<TKey>, new()
     {
         private readonly ConcurrentDictionary<TKey, TState> _store = new ConcurrentDictionary<TKey, TState>();
 
@@ -42,6 +41,18 @@ namespace Net.EasyNetQ.Persistence
         public virtual Task<TState> GetAsync(TKey key)
         {
             return Task.FromResult(Get(key));
+        }
+
+        public Task<TState> FindAsync(TKey id)
+        {
+            return Task.FromResult(Find(id));
+        }
+
+        private TState Find(TKey id)
+        {
+            TState value;
+            _store.TryGetValue(id, out value);
+            return value;
         }
 
         public virtual Task<TKey> SetAsync(TState state)
