@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
+using System.Web.WebPages.Html;
+using Net.Collections;
 using SortDirection = System.Web.UI.WebControls.SortDirection;
 
 namespace Net.Web
@@ -17,16 +17,18 @@ namespace Net.Web
             return new WebGrid<T>().Bind(list.AsQueryable());
         }
     }
+
     /// <summary>
     /// Wrapper for System.Web.RenderSectionExtension.WebGrid that preserves the item type from the data source
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class WebGrid<T> : System.Web.Helpers.WebGrid
+    public class WebGrid<T> : global::System.Web.Helpers.WebGrid
     {
-        private readonly SortDirection _defaultSortDirection = SortDirection.Ascending;
+        private readonly SortDirection defaultSortDirection = SortDirection.Ascending;
 
-        private SortDirection? _sortDirection;
+        private SortDirection? sortDirection;
 
+        /// <param name="source"></param>
         /// <param name="columnNames">Data source column names. Auto-populated by default.</param>
         /// <param name="defaultSort">Default sort column.</param>
         /// <param name="defaultSortDirection"> </param>
@@ -40,10 +42,10 @@ namespace Net.Web
         /// <param name="selectionFieldName">Query string field name for selected row number.</param>
         /// <param name="sortFieldName">Query string field name for sort column.</param>
         /// <param name="sortDirectionFieldName">Query string field name for sort direction.</param>
-        public WebGrid(IEnumerable<string> columnNames = null, string defaultSort = null, SortDirection defaultSortDirection = SortDirection.Ascending, int rowsPerPage = 10, bool canPage = true, bool canSort = true, string ajaxUpdateContainerId = null, string ajaxUpdateCallback = null, string fieldNamePrefix = null, string pageFieldName = null, string selectionFieldName = null, string sortFieldName = null, string sortDirectionFieldName = null)
-            : base(null, columnNames, defaultSort, rowsPerPage, canPage, canSort, ajaxUpdateContainerId, ajaxUpdateCallback, fieldNamePrefix, pageFieldName, selectionFieldName, sortFieldName, sortDirectionFieldName)
+        public WebGrid(IEnumerable<T> source = null, IEnumerable<string> columnNames = null, string defaultSort = null, SortDirection defaultSortDirection = SortDirection.Ascending, int rowsPerPage = 10, bool canPage = true, bool canSort = true, string ajaxUpdateContainerId = null, string ajaxUpdateCallback = null, string fieldNamePrefix = null, string pageFieldName = null, string selectionFieldName = null, string sortFieldName = null, string sortDirectionFieldName = null)
+            : base(source.SafeCast<object>(), columnNames, defaultSort, rowsPerPage, canPage, canSort, ajaxUpdateContainerId, ajaxUpdateCallback, fieldNamePrefix, pageFieldName, selectionFieldName, sortFieldName, sortDirectionFieldName)
         {
-            _defaultSortDirection = defaultSortDirection;
+            this.defaultSortDirection = defaultSortDirection;
         }
 
         public WebGridColumn Col(string columnName = null, string header = null, Func<T, object> format = null, string style = null, bool canSort = true)
@@ -53,7 +55,7 @@ namespace Net.Web
             {
                 wrappedFormat = o => format((T)o.Value);
             }
-            WebGridColumn column = Column(columnName, header, wrappedFormat, style, canSort);
+            var column = Column(columnName, header, wrappedFormat, style, canSort);
             return column;
         }
 
@@ -64,7 +66,7 @@ namespace Net.Web
 
             if (autoSortAndPage)
             {
-                Bind(source.Cast<dynamic>(), columnNames, true, -1);
+                Bind(source.Cast<dynamic>(), columnNames);
                 return this;
             }
 
@@ -86,7 +88,7 @@ namespace Net.Web
 
         private static HttpContextBase HttpContext
         {
-            get { return new HttpContextWrapper(System.Web.HttpContext.Current); }
+            get { return new HttpContextWrapper(global::System.Web.HttpContext.Current); }
         }
 
         private static NameValueCollection QueryString
@@ -98,8 +100,8 @@ namespace Net.Web
         {
             get
             {
-                if (_sortDirection != null)
-                    return _sortDirection.Value;
+                if (this.sortDirection != null)
+                    return this.sortDirection.Value;
 
                 string sortDirection = QueryString[SortDirectionFieldName];
 
@@ -108,22 +110,127 @@ namespace Net.Web
                     if (sortDirection.Equals("ASC", StringComparison.OrdinalIgnoreCase) ||
                         sortDirection.Equals("ASCENDING", StringComparison.OrdinalIgnoreCase))
                     {
-                        _sortDirection = SortDirection.Ascending;
+                        this.sortDirection = SortDirection.Ascending;
                     }
 
                     if (sortDirection.Equals("DESC", StringComparison.OrdinalIgnoreCase) ||
                         sortDirection.Equals("DESCENDING", StringComparison.OrdinalIgnoreCase))
                     {
-                        _sortDirection = SortDirection.Descending;
+                        this.sortDirection = SortDirection.Descending;
                     }
                 }
 
-                return _sortDirection ?? _defaultSortDirection;
+                return this.sortDirection ?? defaultSortDirection;
             }
             set
             {
-                _sortDirection = value;
+                sortDirection = value;
             }
+        }
+    }
+
+    public static class WebGridExtensions
+    {
+        /// <summary>
+        /// Light-weight wrapper around the constructor for WebGrid so that we get take advantage of compiler type inference
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="htmlHelper"></param>
+        /// <param name="source">Data source</param>
+        /// <param name="columnNames">Data source column names. Auto-populated by default.</param>
+        /// <param name="defaultSort">Default sort column.</param>
+        /// <param name="rowsPerPage">Number of rows per page.</param>
+        /// <param name="canPage">true to enable paging</param>
+        /// <param name="canSort">true to enable sorting</param>
+        /// <param name="ajaxUpdateContainerId">ID for the grid's container element. This enables AJAX support.</param>
+        /// <param name="ajaxUpdateCallback">Callback function for the AJAX functionality once the update is complete</param>
+        /// <param name="fieldNamePrefix">Prefix for query string fields to support multiple grids.</param>
+        /// <param name="pageFieldName">Query string field name for page number.</param>
+        /// <param name="selectionFieldName">Query string field name for selected row number.</param>
+        /// <param name="sortFieldName">Query string field name for sort column.</param>
+        /// <param name="sortDirectionFieldName">Query string field name for sort direction.</param>
+        /// <returns></returns>
+        public static WebGrid<T> Grid<T>(this HtmlHelper htmlHelper,
+            IEnumerable<T> source,
+            IEnumerable<string> columnNames = null,
+            string defaultSort = null,
+            int rowsPerPage = 10,
+            bool canPage = true,
+            bool canSort = true,
+            string ajaxUpdateContainerId = null,
+            string ajaxUpdateCallback = null,
+            string fieldNamePrefix = null,
+            string pageFieldName = null,
+            string selectionFieldName = null,
+            string sortFieldName = null,
+            string sortDirectionFieldName = null)
+        {
+            return new WebGrid<T>(source, 
+                columnNames,
+                defaultSort,
+                SortDirection.Ascending,
+                rowsPerPage,
+                canPage,
+                canSort,
+                ajaxUpdateContainerId,
+                ajaxUpdateCallback,
+                fieldNamePrefix,
+                pageFieldName,
+                selectionFieldName,
+                sortFieldName,
+                sortDirectionFieldName);
+        }
+
+        /// <summary>
+        /// Light-weight wrapper around the constructor for WebGrid so that we get take advantage of compiler type inference and to automatically call Bind to disable the automatic paging and sorting (use this for server-side paging)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="htmlHelper"></param>
+        /// <param name="source"></param>
+        /// <param name="totalRows"></param>
+        /// <param name="columnNames"></param>
+        /// <param name="defaultSort"></param>
+        /// <param name="rowsPerPage"></param>
+        /// <param name="canPage"></param>
+        /// <param name="canSort"></param>
+        /// <param name="ajaxUpdateContainerId"></param>
+        /// <param name="ajaxUpdateCallback"></param>
+        /// <param name="fieldNamePrefix"></param>
+        /// <param name="pageFieldName"></param>
+        /// <param name="selectionFieldName"></param>
+        /// <param name="sortFieldName"></param>
+        /// <param name="sortDirectionFieldName"></param>
+        /// <returns></returns>
+        public static WebGrid<T> ServerPagedGrid<T>(this HtmlHelper htmlHelper,
+            IEnumerable<T> source,
+            int totalRows,
+            IEnumerable<string> columnNames = null,
+            string defaultSort = null,
+            int rowsPerPage = 10,
+            bool canPage = true,
+            bool canSort = true,
+            string ajaxUpdateContainerId = null,
+            string ajaxUpdateCallback = null,
+            string fieldNamePrefix = null,
+            string pageFieldName = null,
+            string selectionFieldName = null,
+            string sortFieldName = null,
+            string sortDirectionFieldName = null)
+        {
+            return new WebGrid<T>(source,
+                columnNames,
+                defaultSort,
+                SortDirection.Ascending,
+                rowsPerPage,
+                canPage,
+                canSort,
+                ajaxUpdateContainerId,
+                ajaxUpdateCallback,
+                fieldNamePrefix,
+                pageFieldName,
+                selectionFieldName,
+                sortFieldName,
+                sortDirectionFieldName);
         }
     }
 }

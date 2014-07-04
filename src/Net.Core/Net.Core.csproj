@@ -54,6 +54,7 @@
     <Compile Include="DependencyInjection\RegisterAttribute.cs" />
     <Compile Include="Reflection\ReflectionExtensions.cs" />
     <Compile Include="Reflection\ReflectionProperty.cs" />
+    <Compile Include="System\DateTimeExtensions.cs" />
     <Compile Include="System\TimeSpanExtensions.cs" />
     <Compile Include="Text\StringExtensions.cs" />
     <Compile Include="System\ToExtensions.cs" />
@@ -63,6 +64,7 @@
       <Link>Properties\Net.Core.nuspec</Link>
     </None>
     <None Include="packages.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
