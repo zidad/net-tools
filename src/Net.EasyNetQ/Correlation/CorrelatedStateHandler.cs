@@ -15,22 +15,22 @@ namespace Net.EasyNetQ
 
         public void LoadState(object consumer, object message)
         {
-            Consumer(consumer).State = repository.Get(CorrelationId(message));
+            Consumer(consumer).Instance = repository.Get(CorrelationId(message));
         }
 
         public void SaveState(object consumer, object message)
         {
-            repository.Set(Consumer(consumer).State);
+            repository.Set(Consumer(consumer).Instance);
         }
 
         public async Task LoadStateAsync(object consumer, object message)
         {
-            Consumer(consumer).State = await repository.GetAsync(CorrelationId(message));
+            Consumer(consumer).Instance = await repository.GetOrNewAsync(CorrelationId(message));
         }
 
         public async Task SaveStateAsync(object consumer, object message)
         {
-            await repository.SetAsync(Consumer(consumer).State);
+            await repository.SetAsync(Consumer(consumer).Instance);
         }
 
         private static TCorrelationId CorrelationId(object message)

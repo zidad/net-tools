@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Net.EasyNetQ.Persistence.InMemory;
 
 namespace Net.EasyNetQ.Persistence
 {

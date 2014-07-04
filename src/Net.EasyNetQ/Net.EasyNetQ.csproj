@@ -36,13 +36,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="EasyNetQ, Version=0.33.0.273, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="EasyNetQ, Version=0.33.1.275, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EasyNetQ.0.33.0.273\lib\net40\EasyNetQ.dll</HintPath>
+      <HintPath>..\packages\EasyNetQ.0.33.1.275\lib\net40\EasyNetQ.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="RabbitMQ.Client, Version=3.3.2.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -50,6 +54,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Version.cs">
@@ -57,6 +62,7 @@
     </Compile>
     <Compile Include="Autofac\AttributeErrorHandlerBuilder.cs" />
     <Compile Include="Autofac\AttributePipeBuilder.cs" />
+    <Compile Include="Autofac\AutofacSagaModule.cs" />
     <Compile Include="ErrorHandling\ErrorHandlerAttribute.cs" />
     <Compile Include="Autofac\AutofacGlobalErrorHandlerBuilder.cs" />
     <Compile Include="Autofac\AutofacGlobalPipeBuilder.cs" />
@@ -86,9 +92,8 @@
     <Compile Include="Locking\Redis\RedisLockProvider.cs" />
     <Compile Include="Autofac\AutofacMessageDispatcher.cs" />
     <Compile Include="KeyGeneration\IntGenerator.cs" />
-    <Compile Include="Persistence\ISaga.cs" />
     <Compile Include="Pipes\IPipe.cs" />
-    <Compile Include="Persistence\InMemoryRepository.cs" />
+    <Compile Include="Persistence\InMemory\InMemoryRepository.cs" />
     <Compile Include="Persistence\IRepository.cs" />
     <Compile Include="Persistence\KeyGeneratingMemoryRepository.cs" />
     <Compile Include="KeyGeneration\StringGenerator.cs" />

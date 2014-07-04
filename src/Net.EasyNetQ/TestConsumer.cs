@@ -8,7 +8,7 @@ namespace Net.EasyNetQ.Persistence
         ISaga<TestSagaInstance>, 
         IConsumeLocked<TestMessage>
     {
-        public TestSagaInstance State { get; set; }
+        public TestSagaInstance Instance { get; set; }
         
         public void Consume(TestMessage message)
         {

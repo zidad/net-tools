@@ -61,7 +61,7 @@ namespace Net.EasyNetQ.Persistence
         public static TState GetOrNew<TKey, TState>(this IRepository<TKey, TState> repository, TKey key)
             where TState : class, ICorrelateBy<TKey>, new()
         {
-            var orNewAsync = repository.GetOrNewAsync(key);
+            var orNewAsync = GetOrNewAsync(repository, key);
             orNewAsync.Wait();
             return orNewAsync.Result;
         }

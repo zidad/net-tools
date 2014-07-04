@@ -7,7 +7,7 @@ namespace Net.EasyNetQ.Persistence
         where TState : ICorrelateBy<TKey>, new()
     {
         Task<IQueryable<TState>> GetAllAsync();
-        Task<TState> GetAsync(TKey key);
+        Task<TState> GetOrNewAsync(TKey key);
         Task<TState> FindAsync(TKey id);
         Task<TKey> SetAsync(TState state);
         Task<TState> RemoveAsync(TKey key);

@@ -9,6 +9,11 @@ namespace Net.Collections
 {
     public static class EnumerableExtensions
     {
+        public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> toAdd)
+        {
+            toAdd.ForEach(collection.Add);
+        }
+
         public static IEnumerable<TTarget> SafeCast<TTarget>(this IEnumerable source)
         {
             return source == null ? null : source.Cast<TTarget>();
