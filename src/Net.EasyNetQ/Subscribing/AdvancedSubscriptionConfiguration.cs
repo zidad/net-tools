@@ -6,7 +6,7 @@ namespace Net.EasyNetQ.Subscribing
     {
         public bool Durable { get; set; }
 
-        public AdvancedSubscriptionConfiguration()
+        public AdvancedSubscriptionConfiguration() : base(50)
         {
             Durable = true;
         }
