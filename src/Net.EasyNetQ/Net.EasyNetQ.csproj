@@ -36,10 +36,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="EasyNetQ, Version=0.33.1.275, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="EasyNetQ, Version=0.34.0.280, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EasyNetQ.0.33.1.275\lib\net40\EasyNetQ.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\EasyNetQ.0.34.0.280\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

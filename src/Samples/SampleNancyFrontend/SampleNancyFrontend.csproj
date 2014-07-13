@@ -47,9 +47,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="EasyNetQ">
-      <HintPath>..\..\packages\EasyNetQ.0.33.1.275\lib\net40\EasyNetQ.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="EasyNetQ, Version=0.34.0.280, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\EasyNetQ.0.34.0.280\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -74,16 +74,17 @@
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy, Version=0.23.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Nancy, Version=0.23.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Nancy.0.23.0\lib\net40\Nancy.dll</HintPath>
+      <HintPath>..\..\packages\Nancy.0.23.1\lib\net40\Nancy.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy.Bootstrappers.Autofac">
-      <HintPath>..\..\packages\Nancy.Bootstrappers.Autofac.0.22.2\lib\net40\Nancy.Bootstrappers.Autofac.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Nancy.Bootstrappers.Autofac, Version=0.23.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Nancy.Bootstrappers.Autofac.0.23.1\lib\net40\Nancy.Bootstrappers.Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Nancy.Owin">
-      <HintPath>..\..\packages\Nancy.Owin.0.23.0\lib\net40\Nancy.Owin.dll</HintPath>
+      <HintPath>..\..\packages\Nancy.Owin.0.23.1\lib\net40\Nancy.Owin.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
