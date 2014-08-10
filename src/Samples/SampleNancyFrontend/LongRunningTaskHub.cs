@@ -21,12 +21,16 @@ namespace SampleNancyFrontend
             return base.OnConnected();
         }
 
-        public override Task OnDisconnected()
+        public override Task OnDisconnected(bool stopCalled)
         {
             Interlocked.Decrement(ref _viewerCount);
             ViewerCountChanged(_viewerCount);
+            return base.OnDisconnected(stopCalled);
+        }
 
-            return base.OnDisconnected();
+        public override Task OnReconnected()
+        {
+            return base.OnReconnected();
         }
     }
 }
