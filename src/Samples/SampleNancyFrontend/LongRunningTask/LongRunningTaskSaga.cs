@@ -1,107 +1,76 @@
-﻿using System.Collections.Generic;
+﻿using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
 using Net.Collections;
 using Net.EasyNetQ;
 
 namespace SampleNancyFrontend.LongRunningTask
 {
-    public class LongRunningTaskSaga : ISaga<LongRunningTaskSagaInstance>,
-        IConsume<TaskStarted>,
-        IConsume<TaskProgress>,
-        IConsume<TaskFinished>
+    public class LongRunningTaskSaga : 
+        ISaga<LongRunningTaskSagaInstance>,
+        IConsume<StartTask>,
+        IConsume<ProgressTask>,
+        IConsume<FailTask>,
+        IConsume<FinishTask>
     {
+        private readonly Serilog.ILogger logger;
+        private readonly IBus bus;
+
+        public LongRunningTaskSaga(Serilog.ILogger logger, IBus bus)
+        {
+            this.logger = logger;
+            this.bus = bus;
+        }
+
         public LongRunningTaskSagaInstance Instance { get; set; }
 
-        public void Consume(TaskStarted message)
+        public void Consume(StartTask message)
         {
             Instance.State = TaskStatus.Running;
             Instance.Log.AddRange(message.Log);
+
+            logger.Information("Type: {Type}, State:{State}, Log: {Log}", message.GetType(), Instance.State, message.Log);
+
+            Publish(message, new TaskStarted {});
         }
 
-        public void Consume(TaskProgress message)
+        private void Publish(TaskMessage source, TaskMessage message)
+        {
+            message.Id = source.Id;
+            message.Log.AddRange(source.Log);
+
+            logger.Information("Type: {Type}, State:{State}, Log: {Log}", message.GetType(), Instance.State, message.Log);
+
+            bus.Publish(message);
+        }
+
+        public void Consume(ProgressTask message)
         {
             Instance.Progress = message.Progress;
             Instance.Log.AddRange(message.Log);
+
+            logger.Information("Type: {Type}, State:{State}, Log: {Log}", message.GetType(), Instance.State, message.Log);
+            
+            Publish(message, new TaskProgress { });
         }
 
-        public void Consume(TaskFailed message)
+        public void Consume(FailTask message)
         {
             Instance.State = TaskStatus.Error;
             Instance.Log.AddRange(message.Log);
+
+            logger.Information("Type: {Type}, State:{State}, Log: {Log}", message.GetType(), Instance.State, message.Log);
+            
+            Publish(message, new TaskFailed { });
         }
 
-        public void Consume(TaskFinished message)
+        public void Consume(FinishTask message)
         {
             Instance.State = TaskStatus.Finished;
             Instance.Log.AddRange(message.Log);
+
+            logger.Information("Type: {Type}, State:{State}, Log: {Log}", message.GetType(), Instance.State, message.Log);
+            
+            Publish(message, new TaskFinished { });
         }
-    }
-
-    public class TaskFailed : TaskEvent
-    {
-    }
-
-    public enum TaskStatus 
-    {
-        NotStarted,
-        Running,
-        Error,
-        Finished
-    }
-    
-    public class TaskEvent : ICorrelateBy<int>
-    {
-        public TaskEvent()
-        {
-            Log = new List<TaskLogEntry>();
-        }
-
-        public int Id { get; set; }
-        
-        public IList<TaskLogEntry> Log { get; set; }
-    }
-
-    public class TaskLogEntry
-    {
-        public TaskLogLevel Level { get; set; }
-    }
-
-    public enum TaskLogLevel
-    {
-        Debug,
-        Information,
-        Warning,
-        Error,
-    }
-
-    public class TaskFinished : TaskEvent
-    {
-
-    }
-
-    public class TaskProgress : TaskEvent
-    {
-        public int Progress { get; set; }
-    }
-
-    public class TaskStarted : TaskEvent
-    {
-    }
-
-    public class LongRunningTaskSagaInstance : ICorrelateBy<int>, IFinishable
-    {
-        public int Id { get; set; }
-
-        public TaskStatus State { get; set; }
-
-        public int Progress { get; set; }
-
-        public bool Finished 
-        { 
-            get { return State == TaskStatus.Finished; } 
-        }
-        
-        public IList<TaskLogEntry> Log { get; set; }
-        
     }
 }

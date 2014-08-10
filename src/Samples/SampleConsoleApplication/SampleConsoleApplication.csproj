@@ -41,8 +41,17 @@
       <HintPath>..\..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="EasyNetQ">
-      <HintPath>..\..\packages\EasyNetQ.0.35.3.295\lib\net40\EasyNetQ.dll</HintPath>
+      <HintPath>..\..\packages\EasyNetQ.0.35.3.296\lib\net40\EasyNetQ.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Nancy">
+      <HintPath>..\..\packages\Nancy.0.23.2\lib\net40\Nancy.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Bootstrappers.Autofac">
+      <HintPath>..\..\packages\Nancy.Bootstrappers.Autofac.0.23.2\lib\net40\Nancy.Bootstrappers.Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Hosting.Self">
+      <HintPath>..\..\packages\Nancy.Hosting.Self.0.23.2\lib\net40\Nancy.Hosting.Self.dll</HintPath>
     </Reference>
     <Reference Include="RabbitMQ.Client">
       <HintPath>..\..\packages\RabbitMQ.Client.3.3.2\lib\net30\RabbitMQ.Client.dll</HintPath>
@@ -57,10 +66,13 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LongRunningTask\RunNancy.cs" />
+    <Compile Include="LongRunningTask\SampleLongRunningTask.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleTaskRunner.cs" />
@@ -84,10 +96,16 @@
       <Project>{547110D9-66C4-485A-BEE1-CF9142EB4923}</Project>
       <Name>Net.EasyNetQ</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SampleMessages\SampleMessages.csproj">
+      <Project>{754E7E56-D5A1-4940-B0F0-77C4D36681E3}</Project>
+      <Name>SampleMessages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SampleNancyFrontend\SampleNancyFrontend.csproj">
+      <Project>{3AD605E7-5DF5-4E00-AD85-851AD0B6FEDA}</Project>
+      <Name>SampleNancyFrontend</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="LongRunningTask\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

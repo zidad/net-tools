@@ -1,0 +1,36 @@
+﻿@using Cassette.Nancy
+@{
+    Layout = null;
+    Bundles.Reference("~/scripts");
+    Bundles.Reference("~/scripts/app");
+}<!DOCTYPE html>
+
+<html ng-app="SampleNancyFrontEnd" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Nancy Sample</title>
+    @Bundles.RenderStylesheets()
+    <script>
+        
+
+    </script>
+</head>
+<body ng-controller="AppCtrl">
+    <div id="page">
+        <div id="startTask">
+
+            <button>Start</button>
+        </div>
+
+        <div id='main' role="main" ng-view>
+            <h2>Tasks</h2>
+            <ul>
+                <li ng-repeat="">
+
+                </li>
+            </ul>
+        </div>
+    </div>
+    @Bundles.RenderScripts()
+</body>
+</html>

@@ -43,13 +43,31 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxMin">
+      <HintPath>..\..\packages\AjaxMin.5.11.5295.12309\lib\net40\AjaxMin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="EasyNetQ">
-      <HintPath>..\..\packages\EasyNetQ.0.35.3.295\lib\net40\EasyNetQ.dll</HintPath>
+    <Reference Include="Cassette">
+      <HintPath>..\..\packages\Cassette.2.4.2\lib\net40-client\Cassette.dll</HintPath>
+    </Reference>
+    <Reference Include="Cassette.Nancy">
+      <HintPath>..\..\packages\Cassette.Nancy.2.2.1\lib\net40\Cassette.Nancy.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Cassette.TypeScript">
+      <HintPath>..\..\packages\Cassette.TypeScript.2.4.2\lib\net40-client\Cassette.TypeScript.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EasyNetQ">
+      <HintPath>..\..\packages\EasyNetQ.0.35.3.296\lib\net40\EasyNetQ.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EasyNetQ.DI.Autofac">
+      <HintPath>..\..\packages\EasyNetQ.DI.Autofac.0.35.3.296\lib\net40\EasyNetQ.DI.Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core">
       <HintPath>..\..\packages\Microsoft.AspNet.SignalR.Core.2.1.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
@@ -81,12 +99,23 @@
       <HintPath>..\..\packages\Nancy.Bootstrappers.Autofac.0.23.2\lib\net40\Nancy.Bootstrappers.Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Nancy.Hosting.Aspnet">
+      <HintPath>..\..\packages\Nancy.Hosting.Aspnet.0.23.2\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
+    </Reference>
     <Reference Include="Nancy.Owin">
       <HintPath>..\..\packages\Nancy.Owin.0.23.2\lib\net40\Nancy.Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Nancy.ViewEngines.Razor">
+      <HintPath>..\..\packages\Nancy.Viewengines.Razor.0.23.2\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin">
@@ -96,7 +125,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\RabbitMQ.Client.3.3.2\lib\net30\RabbitMQ.Client.dll</HintPath>
     </Reference>
+    <Reference Include="Serilog, Version=1.3.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Serilog.1.3.43\lib\net45\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.FullNetFx">
+      <HintPath>..\..\packages\Serilog.1.3.43\lib\net45\Serilog.FullNetFx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.2.0\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\angular-animate.js" />
@@ -120,6 +162,7 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\app\app.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
@@ -129,6 +172,7 @@
     <Content Include="Scripts\angular-cookies.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Scripts\app\app.js.map" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
@@ -416,11 +460,17 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LongRunningTask\SignalR\LongRunningTaskClientUpdater.cs" />
+    <Compile Include="Modules\AppModule.cs" />
+    <Compile Include="Modules\TasksModule.cs" />
+    <Compile Include="Startup\AutofacConfig.cs" />
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="LongRunningTaskHub.cs" />
+    <Compile Include="LongRunningTask\SignalR\LongRunningTaskHub.cs" />
     <Compile Include="LongRunningTask\LongRunningTaskSaga.cs" />
+    <Compile Include="LongRunningTask\LongRunningTaskSagaInstance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SampleStartup.cs" />
+    <Compile Include="Startup\BundleConfig.cs" />
+    <Compile Include="Startup\Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -428,6 +478,7 @@
     </Content>
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\app.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -440,6 +491,10 @@
       <Project>{A91D12BA-F9F6-4CD3-A4FF-7E769668FFE3}</Project>
       <Name>Net.Autofac</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Net.Cassette\Net.Cassette.csproj">
+      <Project>{E94CECC0-AE4B-4715-8A2E-7255CC57F2AA}</Project>
+      <Name>Net.Cassette</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Net.Core\Net.Core.csproj">
       <Project>{BBA0A9E7-2819-4ADA-94DB-BF5F3C5A6E1E}</Project>
       <Name>Net.Core</Name>
@@ -448,8 +503,17 @@
       <Project>{547110D9-66C4-485A-BEE1-CF9142EB4923}</Project>
       <Name>Net.EasyNetQ</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Net.Nancy\Net.Nancy.csproj">
+      <Project>{A1C1FC44-5613-4E39-B8C5-A0AC4222890E}</Project>
+      <Name>Net.Nancy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SampleMessages\SampleMessages.csproj">
+      <Project>{754E7E56-D5A1-4940-B0F0-77C4D36681E3}</Project>
+      <Name>SampleMessages</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\app\app.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-mocks.d.ts" />
@@ -459,6 +523,9 @@
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-scenario.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -493,6 +560,13 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>
+if $(ConfigurationName) == Debug (
+xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.23.2\BuildProviders\Nancy.ViewEngines.Razor.BuildProviders.dll" "$(ProjectDir)bin\"
+xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.23.2\lib\Net40\Nancy.ViewEngines.Razor.dll" "$(ProjectDir)bin\"
+)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
