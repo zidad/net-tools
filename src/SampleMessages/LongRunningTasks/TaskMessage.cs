@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// MIT Licensed from http://github.com/zidad/net-tools
+using System.Collections.Generic;
 using Net.EasyNetQ;
 
-namespace SampleNancyFrontend.LongRunningTask
+namespace SampleMessages.LongRunningTasks
 {
     public class TaskMessage : ICorrelateBy<string>
     {

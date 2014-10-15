@@ -39,20 +39,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LongRunningTask\Events\TaskFailed.cs" />
-    <Compile Include="LongRunningTask\Events\TaskFinished.cs" />
-    <Compile Include="LongRunningTask\Events\TaskProgress.cs" />
-    <Compile Include="LongRunningTask\Events\TaskStarted.cs" />
-    <Compile Include="LongRunningTask\StartSampleTask.cs" />
+    <Compile Include="LongRunningTasks\Events\TaskFailed.cs" />
+    <Compile Include="LongRunningTasks\Events\TaskFinished.cs" />
+    <Compile Include="LongRunningTasks\Events\TaskProgress.cs" />
+    <Compile Include="LongRunningTasks\Events\TaskStarted.cs" />
+    <Compile Include="LongRunningTasks\StartSampleTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="LongRunningTask\TaskMessage.cs" />
-    <Compile Include="LongRunningTask\Commands\FailTask.cs" />
-    <Compile Include="LongRunningTask\Commands\FinishTask.cs" />
-    <Compile Include="LongRunningTask\TaskLogEntry.cs" />
-    <Compile Include="LongRunningTask\TaskLogLevel.cs" />
-    <Compile Include="LongRunningTask\Commands\ProgressTask.cs" />
-    <Compile Include="LongRunningTask\Commands\StartTask.cs" />
-    <Compile Include="LongRunningTask\TaskStatus.cs" />
+    <Compile Include="LongRunningTasks\TaskMessage.cs" />
+    <Compile Include="LongRunningTasks\Commands\FailTask.cs" />
+    <Compile Include="LongRunningTasks\Commands\FinishTask.cs" />
+    <Compile Include="LongRunningTasks\TaskLogEntry.cs" />
+    <Compile Include="LongRunningTasks\TaskLogLevel.cs" />
+    <Compile Include="LongRunningTasks\Commands\ProgressTask.cs" />
+    <Compile Include="LongRunningTasks\Commands\StartTask.cs" />
+    <Compile Include="LongRunningTasks\TaskStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Net.EasyNetQ\Net.EasyNetQ.csproj">

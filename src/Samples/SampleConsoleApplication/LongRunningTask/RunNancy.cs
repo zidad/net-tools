@@ -1,4 +1,5 @@
-﻿using System;
+﻿// MIT Licensed from http://github.com/zidad/net-tools
+using System;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 using Nancy.Hosting.Self;
 using Net.CommandLine;
 using Net.Text;
-using SampleNancyFrontend;
+using SampleMessages;
 
 namespace SampleConsoleApplication.LongRunningTask
 {

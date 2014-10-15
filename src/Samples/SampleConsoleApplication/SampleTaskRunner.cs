@@ -1,3 +1,4 @@
+// MIT Licensed from http://github.com/zidad/net-tools
 using System;
 using System.Diagnostics;
 using System.Threading;

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Cassette;
-using EasyNetQ.AutoSubscribe;
+﻿// MIT Licensed from http://github.com/zidad/net-tools
 
-namespace SampleNancyFrontend.LongRunningTask.SignalR
+using EasyNetQ.AutoSubscribe;
+using SampleMessages.LongRunningTasks;
+
+namespace SampleMessages.LongRunningTasks.SignalR
 {
     public class LongRunningTaskClientUpdater 
         :   IConsume<TaskFailed>, 

@@ -8,7 +8,7 @@ namespace Net.EasyNetQ.Persistence
     {
         Task<IQueryable<TState>> GetAllAsync();
         Task<TState> GetOrNewAsync(TKey key);
-        Task<TState> FindAsync(TKey id);
+        Task<TState> FindAsync(TKey key);
         Task<TKey> SetAsync(TState state);
         Task<TState> RemoveAsync(TKey key);
     }

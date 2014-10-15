@@ -1,4 +1,5 @@
-﻿using Net.DependencyInjection;
+﻿// MIT Licensed from http://github.com/zidad/net-tools
+using Net.DependencyInjection;
 
 [assembly:RegisterAssemblyInContainer]
 namespace SampleConsoleApplication

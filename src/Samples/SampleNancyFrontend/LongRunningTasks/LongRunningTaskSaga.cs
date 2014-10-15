@@ -1,9 +1,12 @@
-﻿using EasyNetQ;
+﻿// MIT Licensed from http://github.com/zidad/net-tools
+
+using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
 using Net.Collections;
 using Net.EasyNetQ;
+using SampleMessages.LongRunningTasks;
 
-namespace SampleNancyFrontend.LongRunningTask
+namespace SampleMessages.LongRunningTasks
 {
     public class LongRunningTaskSaga : 
         ISaga<LongRunningTaskSagaInstance>,
@@ -21,14 +24,14 @@ namespace SampleNancyFrontend.LongRunningTask
             this.bus = bus;
         }
 
-        public LongRunningTaskSagaInstance Instance { get; set; }
+        public LongRunningTaskSagaInstance State { get; set; }
 
         public void Consume(StartTask message)
         {
-            Instance.State = TaskStatus.Running;
-            Instance.Log.AddRange(message.Log);
+            State.State = TaskStatus.Running;
+            State.Log.AddRange(message.Log);
 
-            logger.Information("Type: {Type}, State:{State}, Log: {Log}", message.GetType(), Instance.State, message.Log);
+            logger.Information("Type: {Type}, State:{State}, Log: {Log}", message.GetType(), State.State, message.Log);
 
             Publish(message, new TaskStarted {});
         }
@@ -38,37 +41,37 @@ namespace SampleNancyFrontend.LongRunningTask
             message.Id = source.Id;
             message.Log.AddRange(source.Log);
 
-            logger.Information("Type: {Type}, State:{State}, Log: {Log}", message.GetType(), Instance.State, message.Log);
+            logger.Information("Type: {Type}, State:{State}, Log: {Log}", message.GetType(), State.State, message.Log);
 
             bus.Publish(message);
         }
 
         public void Consume(ProgressTask message)
         {
-            Instance.Progress = message.Progress;
-            Instance.Log.AddRange(message.Log);
+            State.Progress = message.Progress;
+            State.Log.AddRange(message.Log);
 
-            logger.Information("Type: {Type}, State:{State}, Log: {Log}", message.GetType(), Instance.State, message.Log);
+            logger.Information("Type: {Type}, State:{State}, Log: {Log}", message.GetType(), State.State, message.Log);
             
             Publish(message, new TaskProgress { });
         }
 
         public void Consume(FailTask message)
         {
-            Instance.State = TaskStatus.Error;
-            Instance.Log.AddRange(message.Log);
+            State.State = TaskStatus.Error;
+            State.Log.AddRange(message.Log);
 
-            logger.Information("Type: {Type}, State:{State}, Log: {Log}", message.GetType(), Instance.State, message.Log);
+            logger.Information("Type: {Type}, State:{State}, Log: {Log}", message.GetType(), State.State, message.Log);
             
             Publish(message, new TaskFailed { });
         }
 
         public void Consume(FinishTask message)
         {
-            Instance.State = TaskStatus.Finished;
-            Instance.Log.AddRange(message.Log);
+            State.State = TaskStatus.Finished;
+            State.Log.AddRange(message.Log);
 
-            logger.Information("Type: {Type}, State:{State}, Log: {Log}", message.GetType(), Instance.State, message.Log);
+            logger.Information("Type: {Type}, State:{State}, Log: {Log}", message.GetType(), State.State, message.Log);
             
             Publish(message, new TaskFinished { });
         }

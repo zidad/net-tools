@@ -1,6 +1,7 @@
-﻿using Nancy;
+﻿// MIT Licensed from http://github.com/zidad/net-tools
+using Nancy;
 
-namespace SampleNancyFrontend.Modules
+namespace SampleMessages.Modules
 {
     public class AppModule : NancyModule
     {

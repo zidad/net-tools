@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿// MIT Licensed from http://github.com/zidad/net-tools
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
 using EasyNetQ.NonGeneric;
 using Net.EasyNetQ;
-using SampleNancyFrontend.LongRunningTask;
+using SampleMessages.LongRunningTasks;
 
 namespace SampleConsoleApplication.LongRunningTask
 {

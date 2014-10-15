@@ -1,14 +1,15 @@
-﻿using Autofac;
+﻿// MIT Licensed from http://github.com/zidad/net-tools
+using Autofac;
 using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Autofac;
 using Nancy.Conventions;
 using Net.Nancy;
 using Net.Text;
-using SampleNancyFrontend.App_Start;
+using SampleMessages.App_Start;
 using Serilog;
 
-namespace SampleNancyFrontend
+namespace SampleMessages
 {
     public class Bootstrapper : AutofacNancyBootstrapper
     {

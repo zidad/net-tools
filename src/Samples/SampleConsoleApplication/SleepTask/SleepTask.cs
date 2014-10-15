@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿// MIT Licensed from http://github.com/zidad/net-tools
+using System.Threading;
 using System.Threading.Tasks;
 using Net.CommandLine;
 using Serilog;

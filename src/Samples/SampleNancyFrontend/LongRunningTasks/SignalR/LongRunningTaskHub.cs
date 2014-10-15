@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR;
-using SampleNancyFrontend.LongRunningTask;
+﻿// MIT Licensed from http://github.com/zidad/net-tools
 
-namespace SampleNancyFrontend
+using System.Threading.Tasks;
+using Microsoft.AspNet.SignalR;
+using SampleMessages.LongRunningTasks;
+
+namespace SampleMessages.LongRunningTasks.SignalR
 {
     public class LongRunningTaskHub : Hub
     {

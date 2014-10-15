@@ -2,7 +2,7 @@ namespace Net.EasyNetQ
 {
     public interface ISaga<TState>
     {
-        TState Instance { get; set; }
+        TState State { get; set; }
     }
 
     public interface IFinishable

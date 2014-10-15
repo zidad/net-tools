@@ -1,10 +1,11 @@
-﻿using Microsoft.Owin;
+﻿// MIT Licensed from http://github.com/zidad/net-tools
+using Microsoft.Owin;
 using Owin;
-using SampleNancyFrontend;
+using SampleMessages;
 
 [assembly: OwinStartup(typeof(Startup))]
 
-namespace SampleNancyFrontend
+namespace SampleMessages
 {
     public class Startup
     {

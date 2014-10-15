@@ -1,13 +1,14 @@
-﻿using System;
+﻿// MIT Licensed from http://github.com/zidad/net-tools
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using EasyNetQ;
 using Nancy;
 using Net.EasyNetQ.Persistence;
-using SampleNancyFrontend.LongRunningTask;
+using SampleMessages.LongRunningTasks;
 
-namespace SampleNancyFrontend.Modules
+namespace SampleMessages.Modules
 {
     public class TasksModule : NancyModule
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿// MIT Licensed from http://github.com/zidad/net-tools
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Reflection;
@@ -16,7 +17,7 @@ using AutofacMessageDispatcher = Net.EasyNetQ.Autofac.AutofacMessageDispatcher;
 using IContainer = Autofac.IContainer;
 using Module = Autofac.Module;
 
-namespace SampleNancyFrontend.App_Start
+namespace SampleMessages.App_Start
 {
 
     public class SerilogModule : Module

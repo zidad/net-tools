@@ -1,4 +1,5 @@
-﻿namespace SampleConsoleApplication
+﻿// MIT Licensed from http://github.com/zidad/net-tools
+namespace SampleConsoleApplication
 {
     public class SleepParameters
     {

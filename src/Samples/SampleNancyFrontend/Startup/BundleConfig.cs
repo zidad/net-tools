@@ -1,11 +1,12 @@
-﻿using System.Linq;
+﻿// MIT Licensed from http://github.com/zidad/net-tools
+using System.Linq;
 using Cassette;
 using Cassette.BundleProcessing;
 using Cassette.Scripts;
 using Cassette.Stylesheets;
 using Net.Cassette;
 
-namespace SampleNancyFrontend
+namespace SampleMessages
 {
 
     public class InsertIntoPipelineParseJavaScriptNotTypeScriptReferences : IBundlePipelineModifier<ScriptBundle>

@@ -60,9 +60,9 @@ namespace Net.EasyNetQ.Persistence.InMemory
             return Task.FromResult(GetOrNew(key));
         }
 
-        public Task<TState> FindAsync(TKey id)
+        public Task<TState> FindAsync(TKey key)
         {
-            return Task.FromResult(Find(id));
+            return Task.FromResult(Find(key));
         }
 
         private TState Find(TKey id)

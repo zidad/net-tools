@@ -460,14 +460,14 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LongRunningTask\SignalR\LongRunningTaskClientUpdater.cs" />
+    <Compile Include="LongRunningTasks\LongRunningTaskSaga.cs" />
+    <Compile Include="LongRunningTasks\LongRunningTaskSagaInstance.cs" />
+    <Compile Include="LongRunningTasks\SignalR\LongRunningTaskClientUpdater.cs" />
+    <Compile Include="LongRunningTasks\SignalR\LongRunningTaskHub.cs" />
     <Compile Include="Modules\AppModule.cs" />
     <Compile Include="Modules\TasksModule.cs" />
     <Compile Include="Startup\AutofacConfig.cs" />
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="LongRunningTask\SignalR\LongRunningTaskHub.cs" />
-    <Compile Include="LongRunningTask\LongRunningTaskSaga.cs" />
-    <Compile Include="LongRunningTask\LongRunningTaskSagaInstance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup\BundleConfig.cs" />
     <Compile Include="Startup\Startup.cs" />
