@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using Net.Reflection;
 using Net.System;
 using Net.Text;
 
@@ -9,45 +12,90 @@ namespace Net.CommandLine
 {
     public static class CommandLineUtilities
     {
-        public static T ReadObject<T>()
+        static readonly Type[] primitiveTypes =
+        { 
+            typeof(string), 
+            typeof(bool), 
+            typeof(bool?), 
+            typeof(int), 
+            typeof(int?), 
+            typeof(decimal), 
+            typeof(decimal?), 
+            typeof(long), 
+            typeof(long?), 
+            typeof(DateTime), 
+            typeof(DateTime?), 
+            typeof(Guid), 
+            typeof(Guid?) 
+        };
+
+        public static T ReadObject<T>(CancellationToken cancellationToken)
         {
-            return (T)ReadObject(typeof(T));
+            return (T)ReadObject(typeof(T), cancellationToken);
         }
 
-        public static object ReadObject(Type type, string defaultName = "")
+        public static object ReadObject(Type type, CancellationToken cancellationToken, string description = "")
         {
+            // TODO: add support for enums, what to do with array types?
             // handle primitive types directly
-            if (new[] { typeof(string), typeof(int), typeof(decimal) }.Contains(type))
+            return primitiveTypes.Contains(type)
+                ? ReadPrimitiveValue(type, description, cancellationToken)
+                : ReadComplexValue(type, description, cancellationToken);
+        }
+
+        private static object ReadComplexValue(Type type, string description, CancellationToken cancellationToken)
+        {
+            var propertyInfos = type.GetProperties();
+            object instance;
+            try
             {
-                Console.WriteLine("Specify {0}", defaultName);
-                return Console.ReadLine().To(type);
+                instance = Activator.CreateInstance(type);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("unable to instantiate type: " + type.FullName, e);
             }
 
-            var propertyInfos = type.GetProperties();
-            var instance = Activator.CreateInstance(type);
-
-            Console.WriteLine("Specify {0} [{1}]", defaultName, type.Name);
+            Console.WriteLine("Specify values for {0} [{1}]", description, type.Name);
             foreach (var propertyInfo in propertyInfos)
             {
-                var isvalid = false;
-                while (!isvalid)
-                {
-                    var defaultExpression = propertyInfo.GetValue(instance).To<string>().Wrap(" (", ")");
+                var defaultExpression = propertyInfo.GetValue(instance).To<string>().Wrap(" (", ")");
+                var propertyDescription = propertyInfo.GetAttribute<DisplayNameAttribute>()
+                        .Get(d => d.DisplayName, propertyInfo.Name) + defaultExpression;
 
-                    Console.Write("Enter a value for {0}.{1}{2}:", defaultName, propertyInfo.Name, defaultExpression);
-                    var line = Console.ReadLine();
+                var value = ReadObject(propertyInfo.PropertyType, cancellationToken, propertyDescription);
 
-                    // TODO: parameter validation
-                    isvalid = true;
+                if (value == null)
+                    continue; // keep default value
 
-                    if (line.HasNoValue())
-                        continue;
-
-                    propertyInfo.SetValue(instance, line.To(propertyInfo.PropertyType));
-                }
+                propertyInfo.SetValue(instance, value);
             }
 
             return instance;
+        }
+
+        private static object ReadPrimitiveValue(Type propertyType, string propertyDescription, CancellationToken cancellationToken)
+        {
+            do
+            {
+                try
+                {
+                    Console.Write("Enter a value for {0}:", propertyDescription);
+                    var line = Console.ReadLine();
+
+                    if (line.HasNoValue())
+                        return null;
+
+                    return line.To(propertyType);
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+            while (!cancellationToken.IsCancellationRequested);
+
+            return null;
         }
     }
 }

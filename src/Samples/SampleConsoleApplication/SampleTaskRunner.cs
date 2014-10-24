@@ -37,7 +37,7 @@ namespace SampleConsoleApplication
                 .Enrich.With(new ProcessIdEnricher())
                 .Enrich.WithProperty("UserName", Environment.UserName)
                 .WriteTo.ColoredConsole()
-                .MinimumLevel.Debug()
+                .MinimumLevel.Information()
                 .CreateLogger();
         }
 
