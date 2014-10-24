@@ -947,6 +947,7 @@
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <Content Include="Views\app.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\Tickets\app.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -975,7 +976,11 @@
       <Project>{A1C1FC44-5613-4E39-B8C5-A0AC4222890E}</Project>
       <Name>Net.Nancy</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SampleMessages\SampleMessages.csproj">
+    <ProjectReference Include="..\SampleLibrary\SampleLibrary.csproj">
+      <Project>{4f84dacd-03e6-46c6-9fce-912c48f503eb}</Project>
+      <Name>SampleLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SampleMessages\SampleMessages.csproj">
       <Project>{754E7E56-D5A1-4940-B0F0-77C4D36681E3}</Project>
       <Name>SampleMessages</Name>
     </ProjectReference>

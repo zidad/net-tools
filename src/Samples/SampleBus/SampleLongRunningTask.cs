@@ -1,4 +1,5 @@
 ﻿// MIT Licensed from http://github.com/zidad/net-tools
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using EasyNetQ.NonGeneric;
 using Net.EasyNetQ;
 using SampleMessages.LongRunningTasks;
 
-namespace SampleConsoleApplication.LongRunningTask
+namespace SampleBus
 {
     public class SampleLongRunningTask  : IConsumeAsync<StartSampleTask>
     {

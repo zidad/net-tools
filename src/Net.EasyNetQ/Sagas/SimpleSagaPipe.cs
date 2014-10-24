@@ -77,7 +77,7 @@ namespace Net.EasyNetQ
             return true;
         }
     }
-
+ 
     public class CleanupAfterFinishPipe 
     { 
     

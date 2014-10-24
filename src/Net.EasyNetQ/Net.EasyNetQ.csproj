@@ -65,7 +65,12 @@
     </Compile>
     <Compile Include="Autofac\AttributeErrorHandlerBuilder.cs" />
     <Compile Include="Autofac\AttributePipeBuilder.cs" />
-    <Compile Include="Autofac\AutofacSagaModule.cs" />
+    <Compile Include="Autofac\AutofacSagaConfigurator.cs" />
+    <Compile Include="Autofac\AutofacEasyNetQExtensions.cs" />
+    <Compile Include="Autofac\DelegatingErrorHandler.cs" />
+    <Compile Include="Autofac\IAutofacSagaConfigurator.cs" />
+    <Compile Include="Autofac\IMessageContext.cs" />
+    <Compile Include="Autofac\MessageContext.cs" />
     <Compile Include="ErrorHandling\ErrorHandlerAttribute.cs" />
     <Compile Include="Autofac\AutofacGlobalErrorHandlerBuilder.cs" />
     <Compile Include="Autofac\AutofacGlobalPipeBuilder.cs" />

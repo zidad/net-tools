@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConcertManager\ReserveTicket.cs" />
     <Compile Include="LongRunningTasks\Events\TaskFailed.cs" />
     <Compile Include="LongRunningTasks\Events\TaskFinished.cs" />
     <Compile Include="LongRunningTasks\Events\TaskProgress.cs" />
@@ -55,7 +56,7 @@
     <Compile Include="LongRunningTasks\TaskStatus.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Net.EasyNetQ\Net.EasyNetQ.csproj">
+    <ProjectReference Include="..\..\Net.EasyNetQ\Net.EasyNetQ.csproj">
       <Project>{547110D9-66C4-485A-BEE1-CF9142EB4923}</Project>
       <Name>Net.EasyNetQ</Name>
     </ProjectReference>

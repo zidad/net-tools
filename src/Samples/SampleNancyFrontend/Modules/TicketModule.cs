@@ -7,10 +7,7 @@ namespace SampleMessages.Modules
         public TicketModule()
             : base("tickets")
         {
-
-            Get["/"] = _ => Response.AsRedirect("~/tickets");
-
-            Get["/tickets"] = _ => View["reserve"];
+            Get["/"] = _ => View["app"];
         }
     }
 }

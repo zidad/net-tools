@@ -4,7 +4,7 @@ using Net.EasyNetQ.Persistence;
 namespace Net.EasyNetQ
 {
     public class CorrelatedStateHandler<TState, TCorrelationId> : ICorrelatedStateHandler
-        where TState : class, ICorrelateBy<TCorrelationId>, new()
+          where TState : class, ICorrelateBy<TCorrelationId>, new()
     {
         private readonly IRepository<TCorrelationId, TState> repository;
 
@@ -15,7 +15,7 @@ namespace Net.EasyNetQ
 
         public void LoadState(object consumer, object message)
         {
-            Consumer(consumer).State = repository.Get(CorrelationId(message));
+            Consumer(consumer).State = repository.GetOrNew(CorrelationId(message));
         }
 
         public void SaveState(object consumer, object message)
