@@ -38,23 +38,29 @@
     <Reference Include="Autofac">
       <HintPath>..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="EasyNetQ, Version=0.37.1.317, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="EasyNetQ, Version=0.44.3.363, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\EasyNetQ.0.37.1.317\lib\net40\EasyNetQ.dll</HintPath>
+      <HintPath>..\..\packages\EasyNetQ.0.44.3.363\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
-    <Reference Include="EasyNetQ.DI.Autofac">
-      <HintPath>..\..\packages\EasyNetQ.DI.Autofac.0.37.1.317\lib\net40\EasyNetQ.DI.Autofac.dll</HintPath>
+    <Reference Include="EasyNetQ.DI.Autofac, Version=0.44.3.363, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\EasyNetQ.DI.Autofac.0.44.3.363\lib\net40\EasyNetQ.DI.Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client, Version=3.4.3.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\RabbitMQ.Client.3.4.3\lib\net35\RabbitMQ.Client.dll</HintPath>
     </Reference>
     <Reference Include="Serilog, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Serilog.1.4.14\lib\net45\Serilog.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.1.4.196\lib\net45\Serilog.dll</HintPath>
     </Reference>
-    <Reference Include="Serilog.Extras.Topshelf">
-      <HintPath>..\..\packages\Serilog.Extras.Topshelf.1.4.12\lib\net45\Serilog.Extras.Topshelf.dll</HintPath>
+    <Reference Include="Serilog.Extras.Topshelf, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Serilog.Extras.Topshelf.1.4.196\lib\net45\Serilog.Extras.Topshelf.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.FullNetFx, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Serilog.1.4.14\lib\net45\Serilog.FullNetFx.dll</HintPath>
+      <HintPath>..\..\packages\Serilog.1.4.196\lib\net45\Serilog.FullNetFx.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

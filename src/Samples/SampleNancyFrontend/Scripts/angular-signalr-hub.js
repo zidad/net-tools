@@ -3,7 +3,7 @@ angular.module('SignalR', [])
 .factory('Hub', ['$', function ($) {
 	//This will allow same connection to be used for all Hubs
 	//It also keeps connection as singleton.
-	var globalConnection = null;
+	var globalConnections = [];
 
 	function initNewConnection(options) {
 		var connection = null;
@@ -20,7 +20,9 @@ angular.module('SignalR', [])
 	function getConnection(options) {
 		var useSharedConnection = !(options && options.useSharedConnection === false);
 		if (useSharedConnection) {
-			return globalConnection === null ? globalConnection = initNewConnection(options) : globalConnection;
+			return typeof globalConnections[options.rootPath] === 'undefined' ?
+			globalConnections[options.rootPath] = initNewConnection(options) :
+			globalConnections[options.rootPath];
 		}
 		else {
 			return initNewConnection(options);
@@ -43,7 +45,7 @@ angular.module('SignalR', [])
 			Hub.connection.stop();
 		};
 		Hub.connect = function () {
-			Hub.connection.start();
+			return Hub.connection.start(options.transport ? { transport: options.transport } : null);
 		};
 
 		if (options && options.listeners) {
@@ -66,9 +68,15 @@ angular.module('SignalR', [])
 		if (options && options.errorHandler) {
 			Hub.connection.error(options.errorHandler);
 		}
+		//Allow for the user of the hub to easily implement actions upon disconnected.
+		//e.g. : Laptop/PC sleep and reopen, one might want to automatically reconnect 
+		//by using the disconnected event on the connection as the starting point.
+		if (options && options.hubDisconnected) {
+		    Hub.connection.disconnected(options.hubDisconnected);
+		}
 
 		//Adding additional property of promise allows to access it in rest of the application.
-		Hub.promise = Hub.connection.start();
+		Hub.promise = Hub.connect();
 		return Hub;
 	};
 }]);

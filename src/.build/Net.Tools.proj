@@ -10,7 +10,7 @@
         <OutputDir>$(BaseDir)\bin</OutputDir>
         <Tools>$(BaseDir)\vendor</Tools>
         <MSBuildCommunityTasksPath>$(Source)\.build</MSBuildCommunityTasksPath>
-        <Nunit>$(NuGetPackages)\NUnit.Runners.2.6.3\tools</Nunit>
+        <Nunit>$(NuGetPackages)\NUnit.Runners.2.6.4\tools</Nunit>
         <NuGet>$(Source)\.nuget</NuGet>
         <Package>$(BaseDir)\package</Package>
     </PropertyGroup>
