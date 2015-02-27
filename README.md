@@ -6,7 +6,7 @@ Net Industry repository/playground for any .NET reusable code.
 
 [![Build Status](https://travis-ci.org/zidad/net-tools.png?branch=master)](https://travis-ci.org/zidad/net-tools)
 
-Net.Core 
+![](https://img.shields.io/nuget/v/Net.Core.svg) Net.Core 
 -
 Contains a set of .NET framework namespaces with no other dependencies, such as:
 
@@ -21,7 +21,7 @@ Contains a set of .NET framework namespaces with no other dependencies, such as:
 
     install-package Net.Core
 
-Net.Autofac 
+![](https://img.shields.io/nuget/v/Net.Autofac.svg) Net.Autofac 
 -
 Contains modules and classes to simplify setting up Autofac. Automatic scanning and registration of types based on attributes. Helps preventing me from having to do registration in most common scenario's 
 
@@ -29,14 +29,14 @@ Contains modules and classes to simplify setting up Autofac. Automatic scanning 
 
     install-package Net.Autofac
 
-Net.EasyNetQ 
+![](https://img.shields.io/nuget/v/Net.EasyNetQ.svg) Net.EasyNetQ
 -
 Contains experiments and additions for EasyNetQ (depends on Autofac too), to implement a Nancy-like pipeline for message processing in Autofac, and add (very basic) Correlation, Locking and Saga support
 
 [install from nuget:](http://nuget.org/packages/Net.EasyNetQ)
 
     install-package Net.EasyNetQ
-Net.FluentMigrator 
+ ![](https://img.shields.io/nuget/v/Net.FluentMigrator.svg) Net.FluentMigrator
 -
 Contains helpers to simplify the usage of [FluentMigrator](https://github.com/schambers/fluentmigrator "FluentMigrator")
 
@@ -44,7 +44,7 @@ Contains helpers to simplify the usage of [FluentMigrator](https://github.com/sc
     
 	install-package Net.FluentMigrator
 
-Net.Web 
+![](https://img.shields.io/nuget/v/Net.Web.svg) Net.Web 
 -
 Contains helpers for Asp.Net MVC
 
@@ -52,7 +52,7 @@ Contains helpers for Asp.Net MVC
 
     install-package Net.Web
 
-
+---
 
 The MIT License (MIT)
 
