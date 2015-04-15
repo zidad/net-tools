@@ -55,6 +55,7 @@
     <Compile Include="Reflection\ReflectionExtensions.cs" />
     <Compile Include="Reflection\ReflectionProperty.cs" />
     <Compile Include="System\DateTimeExtensions.cs" />
+    <Compile Include="System\EventArgs.cs" />
     <Compile Include="System\TimeSpanExtensions.cs" />
     <Compile Include="Text\StringExtensions.cs" />
     <Compile Include="System\ToExtensions.cs" />
