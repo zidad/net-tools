@@ -83,7 +83,7 @@ namespace SampleLibrary
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterModule(new AssemblyPreloaderModule());
+            builder.RegisterModule(new AssemblyPreloaderModule(a => { }));
             var autofacRegistrationModule = new RegistrationModule();
 
             if (configuration.ConfigureModule != null)

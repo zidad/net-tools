@@ -42,16 +42,16 @@
     </Compile>
     <Compile Include="Collections\EnumerableExtensions.cs" />
     <Compile Include="Collections\PropertyEqualityComparer.cs" />
-    <Compile Include="CommandLine\CommandLineUtilities.cs" />
     <Compile Include="CommandLine\ICommandLineTask.cs" />
     <Compile Include="Enums\Enum.cs" />
     <Compile Include="Enums\EnumList.cs" />
     <Compile Include="Reflection\AssemblyPreloader.cs" />
-    <Compile Include="Reflection\AssemblyPreloaderSettings.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DependencyInjection\RegisterAssemblyInContainer.cs" />
     <Compile Include="DependencyInjection\RegisterAttribute.cs" />
+    <Compile Include="Reflection\AssemblyPreloaderSettings.cs" />
+    <Compile Include="Reflection\IAssemblyPreloadSettings.cs" />
     <Compile Include="Reflection\ReflectionExtensions.cs" />
     <Compile Include="Reflection\ReflectionProperty.cs" />
     <Compile Include="System\DateTimeExtensions.cs" />

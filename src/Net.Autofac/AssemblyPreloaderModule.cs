@@ -9,9 +9,9 @@ namespace Net.Autofac
     {
         private readonly AssemblyPreloader preloader;
 
-        public AssemblyPreloaderModule()
+        public AssemblyPreloaderModule(Action<IAssemblyPreloadSettings> assemblyPreloadConfigurator)
         {
-            preloader = new AssemblyPreloader();
+            preloader = new AssemblyPreloader(assemblyPreloadConfigurator);
         }
 
         protected override void Load(ContainerBuilder builder)
@@ -20,12 +20,5 @@ namespace Net.Autofac
 
             preloader.PreLoadAssembliesFromPath();
         }
-
-        public AssemblyPreloaderModule Filter(Func<FileInfo, bool> filter)
-        {
-            preloader.Filter(filter);
-            return this;
-        }
-
     }
 }

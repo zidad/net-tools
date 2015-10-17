@@ -61,6 +61,7 @@
     <Compile Include="Core\ToExtensionsFixture.cs" />
     <Compile Include="Core\TypeIsOfNullableFixture.cs" />
     <Compile Include="EasyNetQ\LockingConsumerTests.cs" />
+    <Compile Include="EasyNetQ\ConsumerPipeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EasyNetQ\TestConsumer.cs" />
     <Compile Include="EasyNetQ\TestMessage.cs" />

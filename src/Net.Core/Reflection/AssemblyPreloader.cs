@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -14,8 +15,15 @@ namespace Net.Reflection
             Settings = new AssemblyPreloaderSettings
             {
                 Filter = x => true,
-                Path = AppDomain.CurrentDomain.BaseDirectory
+                Path = AppDomain.CurrentDomain.BaseDirectory,
+                IncludeExecutables = false
             };
+        }
+
+        public AssemblyPreloader(Action<IAssemblyPreloadSettings> assemblyPreloadConfigurator) : this()
+        {
+            if (assemblyPreloadConfigurator != null)
+                assemblyPreloadConfigurator(Settings);
         }
 
         public void PreLoadAssembliesFromPath()
@@ -28,9 +36,13 @@ namespace Net.Reflection
             //get all .dll files from the specified path and load the lot
             //you might not want recursion - handy for localised assemblies 
             //though especially.
-            var assemblyFiles = new DirectoryInfo(p).GetFiles("*.dll", SearchOption.AllDirectories);
+            var directoryInfo = new DirectoryInfo(p);
+            IEnumerable<FileInfo> assemblyFiles = directoryInfo.GetFiles("*.dll", SearchOption.AllDirectories);
 
-            foreach (var assemblyName in assemblyFiles
+            if (Settings.IncludeExecutables)
+                assemblyFiles = assemblyFiles.Union(directoryInfo.GetFiles("*.exe", SearchOption.AllDirectories));
+
+            foreach (AssemblyName assemblyName in assemblyFiles
                 .Where(Settings.Filter)
                 .Select(fi => fi.FullName)
                 .Select(AssemblyName.GetAssemblyName)
@@ -50,12 +62,6 @@ namespace Net.Reflection
                     //Debug.WriteLine(e); // TODO: just ignore this?
                 }
             }
-        }
-
-        public AssemblyPreloader Filter(Func<FileInfo, bool> filter)
-        {
-            Settings.Filter = filter;
-            return this;
         }
     }
 }
