@@ -15,13 +15,15 @@ namespace Net.Autofac.CommandLine
 {
     public class DisplayCommandLineTasks : ICommandLineTask
     {
-        private readonly IComponentContext _container;
+        private readonly ILifetimeScope _container;
         private readonly ILogger _logger;
+        private readonly CommandLineReader _commandLineReader;
 
-        public DisplayCommandLineTasks(IComponentContext container, ILogger logger)
+        public DisplayCommandLineTasks(ILifetimeScope container, ILogger logger, CommandLineReader commandLineReader)
         {
-            this._container = container;
-            this._logger = logger;
+            _container = container;
+            _logger = logger;
+            _commandLineReader = commandLineReader;
         }
 
         public async Task Run(CancellationToken cancellationToken)
@@ -47,43 +49,65 @@ namespace Net.Autofac.CommandLine
                 if (string.IsNullOrEmpty(readLine))
                     return;
 
-                var taskIndex = readLine.To<int>() - 1;
-                if (tasks.Length <= taskIndex || taskIndex < 0)
+                int taskIndex;
+                try
                 {
-                    _logger.Error("Invalid task number");
+                    taskIndex = readLine.To<int>() - 1;
+                    if (tasks.Length <= taskIndex || taskIndex < 0)
+                    {
+                        _logger.Error("Invalid task number");
+                        continue;
+                    }
+                }
+                catch (FormatException e)
+                {
+                    _logger.Error(e, "");
                     continue;
                 }
 
                 var type = tasks[taskIndex];
-                var task = _container.Resolve(type);
 
-                try
+                using (var scope = _container.BeginLifetimeScope("task"))
                 {
-                    Type concreteType;
-                    if (task as ICommandLineTask != null)
-                        await (task as ICommandLineTask).Run(cancellationToken);
-                    else if (task.GetType().IsOfGenericType(typeof(ICommandLineTask<>), out concreteType))
+                    var task = scope.Resolve(type);
+                    try
                     {
-                        var paramType = concreteType.GetGenericArguments()[0];
-                        var methodInfo = task.GetType().GetMethod("Run", new[] { paramType, typeof(CancellationToken) });
-                        var parameterInfo = methodInfo.GetParameters()[0];
-                        var parameterName = parameterInfo.GetCustomAttribute<DescriptionAttribute>().Get(d => d.Description, parameterInfo.Name);
-                        var parameters = CommandLineUtilities.ReadObject(paramType, cancellationToken, parameterName);
-                        await (Task)methodInfo.Invoke(task, new[] { parameters, cancellationToken });
+                        await RunTask(cancellationToken, task);
+
+                        _logger.Information("Succesfully ran task {task}", task);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        _logger.Warning("Task canceled by user {task}", task);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        _logger.Warning("Operation canceled by user {task}", task);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error(ex, "Failed to execute task {task}", task);
                     }
                 }
-                catch (TaskCanceledException)
-                {
-                    _logger.Warning("Task canceled by user {task}", task);
-                }
-                catch (OperationCanceledException)
-                {
-                    _logger.Warning("Operation canceled by user {task}", task);
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error(ex, "Failed to execute task {task}", task);
-                }
+                Console.WriteLine();
+            }
+        }
+
+        private async Task RunTask(CancellationToken cancellationToken, object task)
+        {
+            Type concreteType;
+            var parameterlessTask = task as ICommandLineTask;
+            if (parameterlessTask != null)
+                await parameterlessTask.Run(cancellationToken);
+            else if (task.GetType().IsOfGenericType(typeof(ICommandLineTask<>), out concreteType))
+            {
+                var paramType = concreteType.GetGenericArguments()[0];
+                var methodInfo = task.GetType().GetMethod("Run", new[] { paramType, typeof(CancellationToken) });
+                var parameterInfo = methodInfo.GetParameters()[0];
+                var parameterName = parameterInfo.GetCustomAttribute<DescriptionAttribute>()
+                    .Get(d => d.Description, parameterInfo.Name);
+                var parameters = _commandLineReader.ReadObject(paramType, cancellationToken, parameterName);
+                await (Task)methodInfo.Invoke(task, new[] { parameters, cancellationToken });
             }
         }
     }

@@ -55,6 +55,7 @@
     </Compile>
     <Compile Include="AssemblyPreloaderModule.cs" />
     <Compile Include="AutofacExtensions.cs" />
+    <Compile Include="CommandLine\CommandLineUtilities.cs" />
     <Compile Include="CommandLine\DisplayCommandLineTasks.cs" />
     <Compile Include="RegistrationModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

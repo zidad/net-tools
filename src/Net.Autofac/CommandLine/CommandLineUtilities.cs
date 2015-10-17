@@ -1,40 +1,50 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading;
+using Autofac;
 using Net.Reflection;
 using Net.System;
 using Net.Text;
 
 namespace Net.CommandLine
 {
-    public static class CommandLineUtilities
+    public class CommandLineReader
     {
+        private readonly ILifetimeScope _activator;
+
+        public CommandLineReader(ILifetimeScope scope)
+        {
+            _activator = scope;
+        }
+
         static readonly Type[] primitiveTypes =
-        { 
-            typeof(string), 
-            typeof(bool), 
-            typeof(bool?), 
-            typeof(int), 
-            typeof(int?), 
-            typeof(decimal), 
-            typeof(decimal?), 
-            typeof(long), 
-            typeof(long?), 
-            typeof(DateTime), 
-            typeof(DateTime?), 
-            typeof(Guid), 
-            typeof(Guid?) 
+        {
+            typeof(string),
+            typeof(int),
+            typeof(int?),
+            typeof(short),
+            typeof(short?),
+            typeof(long),
+            typeof(long?),
+            typeof(bool),
+            typeof(bool?),
+            typeof(double),
+            typeof(double?),
+            typeof(decimal),
+            typeof(decimal?),
+            typeof(DateTime),
+            typeof(DateTime?),
+            typeof(Guid),
+            typeof(Guid?)
         };
 
-        public static T ReadObject<T>(CancellationToken cancellationToken)
+        public T ReadObject<T>(CancellationToken cancellationToken)
         {
             return (T)ReadObject(typeof(T), cancellationToken);
         }
 
-        public static object ReadObject(Type type, CancellationToken cancellationToken, string description = "")
+        public object ReadObject(Type type, CancellationToken cancellationToken, string description = "")
         {
             // TODO: add support for enums, what to do with array types?
             // handle primitive types directly
@@ -43,27 +53,29 @@ namespace Net.CommandLine
                 : ReadComplexValue(type, description, cancellationToken);
         }
 
-        private static object ReadComplexValue(Type type, string description, CancellationToken cancellationToken)
+        private object ReadComplexValue(Type type, string title, CancellationToken cancellationToken)
         {
             var propertyInfos = type.GetProperties();
             object instance;
             try
             {
-                instance = Activator.CreateInstance(type);
+                instance = _activator.Resolve(type);
             }
             catch (Exception e)
             {
                 throw new Exception("unable to instantiate type: " + type.FullName, e);
             }
 
-            Console.WriteLine("Specify values for {0} [{1}]", description, type.Name);
+            if (propertyInfos.Length > 0)
+                Console.WriteLine("Specify values for {0} [{1}]", title, type.Name);
+
             foreach (var propertyInfo in propertyInfos)
             {
-                var defaultExpression = propertyInfo.GetValue(instance).To<string>().Wrap(" (", ")");
-                var propertyDescription = propertyInfo.GetAttribute<DisplayNameAttribute>()
+                var defaultExpression = propertyInfo.GetValue(instance).To<string>().Wrap(" [default: ", "]");
+                var propertyName = propertyInfo.GetAttribute<DisplayNameAttribute>()
                         .Get(d => d.DisplayName, propertyInfo.Name) + defaultExpression;
 
-                var value = ReadObject(propertyInfo.PropertyType, cancellationToken, propertyDescription);
+                var value = ReadObject(propertyInfo.PropertyType, cancellationToken, propertyName);
 
                 if (value == null)
                     continue; // keep default value
@@ -80,9 +92,9 @@ namespace Net.CommandLine
             {
                 try
                 {
-                    Console.Write("Enter a value for {0}:", propertyDescription);
-                    var line = Console.ReadLine();
+                    Console.Write("Enter a [{1}] for {0}:", propertyDescription, propertyType);
 
+                    var line = Console.ReadLine();
                     if (line.HasNoValue())
                         return null;
 
