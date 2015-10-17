@@ -67,9 +67,9 @@ namespace Net.Autofac.CommandLine
 
                 var type = tasks[taskIndex];
 
-                using (_container.BeginLifetimeScope("task"))
+                using (var scope = _container.BeginLifetimeScope("task"))
                 {
-                    var task = _container.Resolve(type);
+                    var task = scope.Resolve(type);
                     try
                     {
                         await RunTask(cancellationToken, task);

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Net.Autofac;
 using Net.Autofac.CommandLine;
+using Net.CommandLine;
 using Serilog;
 using Serilog.Enrichers;
 
@@ -22,7 +23,7 @@ namespace SampleConsoleApplication
 
             var builder = new ContainerBuilder();
 
-            builder.RegisterModule(new RegistrationModule().IncludeAssemblies());
+            builder.RegisterModule(new RegistrationModule().IncludeAssemblies(typeof(CommandLineReader).Assembly));
             builder.RegisterType<DisplayCommandLineTasks>().AsSelf();
             builder.Register(x => CreateLogger());
 
