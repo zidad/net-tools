@@ -3,7 +3,7 @@
   <metadata>
     <id>Net.FluentMigrator</id>
     <!-- Version gets updated during the build's packaging process -->
-    <version>0.1.9.0</version>
+    <version>0.1.10.0</version>
     <title>Net.FluentMigrator</title>
     <authors>Wiebe Tijsma</authors>
     <owners>Wiebe Tijsma</owners>
