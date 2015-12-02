@@ -102,10 +102,6 @@
       <Project>{754E7E56-D5A1-4940-B0F0-77C4D36681E3}</Project>
       <Name>SampleMessages</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SampleNancyFrontend\SampleNancyFrontend.csproj">
-      <Project>{3AD605E7-5DF5-4E00-AD85-851AD0B6FEDA}</Project>
-      <Name>SampleNancyFrontend</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

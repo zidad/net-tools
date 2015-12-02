@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.Core", "Net.Core\Net.Core.csproj", "{BBA0A9E7-2819-4ADA-94DB-BF5F3C5A6E1E}"
 EndProject
@@ -30,11 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{981013
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.FluentMigrator", "Net.FluentMigrator\Net.FluentMigrator.csproj", "{87142B17-8DBB-4FEE-A14C-987085AE06E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleConsoleApplication", "Samples\SampleConsoleApplication\SampleConsoleApplication.csproj", "{FC70FF0E-90BA-4CA8-92FD-FD9139E09DFC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{9EAF4C6F-1781-4B22-8244-0E88ED1958D2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleNancyFrontend", "Samples\SampleNancyFrontend\SampleNancyFrontend.csproj", "{3AD605E7-5DF5-4E00-AD85-851AD0B6FEDA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.Cassette", "Net.Cassette\Net.Cassette.csproj", "{E94CECC0-AE4B-4715-8A2E-7255CC57F2AA}"
 EndProject
@@ -80,14 +76,6 @@ Global
 		{87142B17-8DBB-4FEE-A14C-987085AE06E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87142B17-8DBB-4FEE-A14C-987085AE06E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87142B17-8DBB-4FEE-A14C-987085AE06E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FC70FF0E-90BA-4CA8-92FD-FD9139E09DFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FC70FF0E-90BA-4CA8-92FD-FD9139E09DFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FC70FF0E-90BA-4CA8-92FD-FD9139E09DFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FC70FF0E-90BA-4CA8-92FD-FD9139E09DFC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3AD605E7-5DF5-4E00-AD85-851AD0B6FEDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3AD605E7-5DF5-4E00-AD85-851AD0B6FEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3AD605E7-5DF5-4E00-AD85-851AD0B6FEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3AD605E7-5DF5-4E00-AD85-851AD0B6FEDA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E94CECC0-AE4B-4715-8A2E-7255CC57F2AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E94CECC0-AE4B-4715-8A2E-7255CC57F2AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E94CECC0-AE4B-4715-8A2E-7255CC57F2AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -113,8 +101,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{FC70FF0E-90BA-4CA8-92FD-FD9139E09DFC} = {9EAF4C6F-1781-4B22-8244-0E88ED1958D2}
-		{3AD605E7-5DF5-4E00-AD85-851AD0B6FEDA} = {9EAF4C6F-1781-4B22-8244-0E88ED1958D2}
 		{754E7E56-D5A1-4940-B0F0-77C4D36681E3} = {9EAF4C6F-1781-4B22-8244-0E88ED1958D2}
 		{4F84DACD-03E6-46C6-9FCE-912C48F503EB} = {9EAF4C6F-1781-4B22-8244-0E88ED1958D2}
 		{C72B37D6-A54F-4571-865C-1CEF4C221ADF} = {9EAF4C6F-1781-4B22-8244-0E88ED1958D2}
