@@ -4,10 +4,10 @@ using System.Configuration;
 using System.Linq;
 using Autofac;
 using EasyNetQ;
+using EasyNetQ.AutoSubscribe;
 using EasyNetQ.DI;
 using Net.Autofac;
 using Net.Collections;
-using Net.EasyNetQ.Subscribing;
 using AutofacMessageDispatcher = Net.EasyNetQ.Autofac.AutofacMessageDispatcher;
 using IContainer = Autofac.IContainer;
 
@@ -45,15 +45,13 @@ namespace SampleLibrary
             if (configuration.IsGuiInstance)
                 subscriptionIdPrefix = string.Format("{0}-{1}", Environment.MachineName, subscriptionIdPrefix);
 
-            var factory = Container.Resolve<AdvancedAutoSubscriber.Factory>();
-            var subscriber = factory(subscriptionIdPrefix);
+            var subscriber = Container.Resolve<AutoSubscriber>();
 
             var busLifetimeScope = Container.BeginLifetimeScope("bus", BusSpecificDependencies);
 
             subscriber.AutoSubscriberMessageDispatcher = new AutofacMessageDispatcher(busLifetimeScope);
             subscriber.GenerateSubscriptionId = info => string.Format("{0}:{1}", subscriptionIdPrefix, info.ConcreteType.Name);
-            subscriber.SubscriptionConfiguration = (c, s) => c
-                .Durable(!configuration.IsGuiInstance)
+            subscriber.ConfigureSubscriptionConfiguration = (c) => c
                 .WithAutoDelete(configuration.IsGuiInstance);
 
             foreach (var consumerAssembly in configuration.ConsumerAssemblies)

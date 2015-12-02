@@ -38,7 +38,7 @@ namespace Net.FluentMigrator
         {
             string objectToWhereClause = ObjectToWhereClause(row);
             //Console.WriteLine("Checking existing data for: SELECT * FROM [{0}].[{1}] WHERE {2}".FormatWith(table.SchemaName, table.Name, objectToWhereClause));
-            return ((ProcessorBase)_context.QuerySchema).Exists("SELECT * FROM [{0}].[{1}] WHERE {2}", _table.SchemaName, _table.Name, objectToWhereClause);
+            return ((ProcessorBase)_context.QuerySchema).Exists("SELECT 1 FROM [{0}].[{1}] WHERE {2}", _table.SchemaName, _table.Name, objectToWhereClause);
         }
 
         private static string ObjectToWhereClause(object row)

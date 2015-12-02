@@ -1,6 +1,7 @@
 using System;
 using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
+using EasyNetQ.Scheduling;
 using Net.EasyNetQ.Autofac;
 using Net.EasyNetQ.Pipes;
 
