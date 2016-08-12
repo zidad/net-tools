@@ -3,7 +3,7 @@
   <metadata>
     <id>Net.Autofac</id>
     <!-- Version gets updated during the build's packaging process -->
-    <version>0.1.11.0</version>
+    <version>0.1.12.0</version>
     <title>Net.Autofac</title>
     <authors>Wiebe Tijsma</authors>
     <owners>Wiebe Tijsma</owners>
@@ -16,7 +16,8 @@
     <tags>C#</tags>
     <dependencies>
       <dependency id="Net.Core" />
-      <dependency id="Autofac" />
+      <dependency id="Autofac" version="4.0.0" />
+      <dependency id="Serilog" version="2.1.0" />
     </dependencies>
   </metadata>
 </package>
