@@ -4,7 +4,7 @@
     <id>Net.EasyNetQ</id>
     <!-- Version gets updated during the build's packaging process -->
     <version>0.1.12.0</version>
-    <title>Net.Autofac</title>
+    <title>Net.EasyNetQ</title>
     <authors>Wiebe Tijsma</authors>
     <owners>Wiebe Tijsma</owners>
     <licenseUrl>https://github.com/zidad/net-tools</licenseUrl>
@@ -16,7 +16,7 @@
     <tags>C#</tags>
     <dependencies>
       <dependency id="Net.Core" />
-      <dependency id="EasyNetQ" />
+      <dependency id="EasyNetQ" version="0.62.1.445"/>
     </dependencies>
   </metadata>
 </package>

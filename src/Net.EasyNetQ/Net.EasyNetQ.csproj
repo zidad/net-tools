@@ -101,6 +101,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\package\Net.EasyNetQ\Net.EasyNetQ.nuspec">
+      <Link>Properties\Net.EasyNetQ.nuspec</Link>
+    </None>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="README.md" />
