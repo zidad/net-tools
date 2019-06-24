@@ -1,6 +1,7 @@
 ﻿using System;
+using Net.EasyNetQ;
 
-namespace Net.EasyNetQ
+namespace Net.Tests.EasyNetQ
 {
     public class TestMessage : ICorrelateBy<Guid>
     {

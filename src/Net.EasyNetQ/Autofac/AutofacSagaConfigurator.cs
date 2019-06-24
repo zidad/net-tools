@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using Autofac;
 using Net.EasyNetQ.Persistence;
 using Net.EasyNetQ.Persistence.InMemory;
+using Net.EasyNetQ.Pipes;
 
 namespace Net.EasyNetQ.Autofac
 {
     public class AutofacSagaConfigurator : IAutofacSagaConfigurator
     {
-        private readonly List<Action<ContainerBuilder>> actions = new List<Action<ContainerBuilder>>();
+        readonly List<Action<ContainerBuilder>> actions = new List<Action<ContainerBuilder>>();
  
         public void Configure(ContainerBuilder builder)
         {

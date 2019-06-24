@@ -1,6 +1,6 @@
 ﻿using System;
 using EasyNetQ.AutoSubscribe;
-using Net.EasyNetQ.Pipes;
+using Net.EasyNetQ.ErrorHandling;
 
 namespace Net.EasyNetQ.Autofac
 {

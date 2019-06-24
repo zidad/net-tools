@@ -11,7 +11,7 @@ namespace Net.Collections
     /// <typeparam name="TProperty">The type of the P.</typeparam>
     public class PropertyEqualityComparer<TObject, TProperty> : EqualityComparer<TObject>
     {
-        private readonly Func<TObject, TProperty> getter;
+        readonly Func<TObject, TProperty> getter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyEqualityComparer&lt;T, TP&gt;"/> class.

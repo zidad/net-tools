@@ -10,14 +10,14 @@ namespace Net.Web.Autofac
 {
     public class InjectableActionFilterAttribute : ActionFilterAttribute
     {
-        private readonly Type filterType;
+        readonly Type filterType;
 
         public InjectableActionFilterAttribute(Type filterType)
         {
             this.filterType = filterType;
         }
 
-        private static ILifetimeScope Scope
+        static ILifetimeScope Scope
         {
             get
             {

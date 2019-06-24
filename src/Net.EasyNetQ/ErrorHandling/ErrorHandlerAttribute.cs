@@ -1,7 +1,6 @@
 using System;
-using Net.EasyNetQ.Pipes;
 
-namespace Net.EasyNetQ.Autofac
+namespace Net.EasyNetQ.ErrorHandling
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class ErrorHandlerAttribute : Attribute

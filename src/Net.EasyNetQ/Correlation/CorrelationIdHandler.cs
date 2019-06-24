@@ -1,4 +1,3 @@
-using Net.EasyNetQ.Locking;
 
 namespace Net.EasyNetQ
 {

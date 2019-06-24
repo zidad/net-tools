@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
-using Net.EasyNetQ.Pipes;
+using Net.EasyNetQ.ErrorHandling;
 using Net.Reflection;
 
 namespace Net.EasyNetQ.Autofac
 {
     public class AttributeErrorHandlerBuilder : IErrorHandlerBuilder 
     {
-        private readonly IComponentContext scope;
+        readonly IComponentContext scope;
 
         public AttributeErrorHandlerBuilder(IComponentContext scope)
         {

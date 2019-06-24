@@ -1,5 +1,7 @@
 ﻿using System;
 using Autofac;
+using Net.EasyNetQ.ErrorHandling;
+using Net.EasyNetQ.KeyGeneration;
 using Net.EasyNetQ.Persistence;
 using Net.EasyNetQ.Persistence.InMemory;
 using Net.EasyNetQ.Pipes;
@@ -30,17 +32,6 @@ namespace Net.EasyNetQ.Autofac
             builder.RegisterType<DelegatingErrorHandler>().AsImplementedInterfaces().Named<IErrorHandler>("global");
             builder.RegisterType<IntGenerator>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<StringGenerator>().AsImplementedInterfaces().SingleInstance();
-        }
-    }
-
-    public class ElasticSearchSagaModule : Module
-    {
-        protected override void Load(ContainerBuilder builder)
-        {
-            base.Load(builder);
-
-            //builder.RegisterGeneric(typeof(ElasticSearchRepository<>)).As(typeof(IRepository<,>));
-            //builder.RegisterGeneric(typeof(CustomerSpecificElasticSearchNamingConvention<>)).As(typeof(IElasticSearchNamingConvention<>));
         }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Reflection;
 using FluentMigrator.Infrastructure;
-using FluentMigrator.Model;
 using FluentMigrator.Runner.Processors;
 using Net.Collections;
-using Net.Text;
 
 namespace Net.FluentMigrator
 {
@@ -13,8 +11,8 @@ namespace Net.FluentMigrator
         IDataTableSyntax,
         IDataSchemaSyntax
     {
-        private readonly IMigrationContext _context;
-        private readonly TableDefinition _table;
+        readonly IMigrationContext _context;
+        readonly TableDefinition _table;
 
         public DataExpressionRoot(IMigrationContext migrationContext)
         {
@@ -38,22 +36,28 @@ namespace Net.FluentMigrator
         {
             string objectToWhereClause = ObjectToWhereClause(row);
             //Console.WriteLine("Checking existing data for: SELECT * FROM [{0}].[{1}] WHERE {2}".FormatWith(table.SchemaName, table.Name, objectToWhereClause));
-            return ((ProcessorBase)_context.QuerySchema).Exists("SELECT 1 FROM [{0}].[{1}] WHERE {2}", _table.SchemaName, _table.Name, objectToWhereClause);
+            return ((ProcessorBase)_context.QuerySchema).Exists("SELECT * FROM [{0}].[{1}] WHERE {2}", _table.SchemaName, _table.Name, objectToWhereClause);
         }
 
-        private static string ObjectToWhereClause(object row)
+        static string ObjectToWhereClause(object row)
         {
             return row.GetType().GetProperties().ConcatToString(p => ToEqualsClause(row, p), " AND ");
         }
 
-        private static string ToEqualsClause(object row, PropertyInfo p)
+        static string ToEqualsClause(object row, PropertyInfo p)
         {
-            return "[{0}]={1}".FormatWith(p.Name, EscapeValue(p.PropertyType, p.GetValue(row, null)));
+            return $"[{p.Name}]={EscapeValue(p.PropertyType, p.GetValue(row, null))}";
         }
 
-        private static string EscapeValue(Type propertyType, object value)
+        static string EscapeValue(Type propertyType, object value)
         {
-            return new[] { typeof(int), typeof(short), typeof(long), typeof(decimal) }.IndexOf(propertyType) > -1 ? value.ToString() : string.Format("'{0}'", value.ToString().Replace("'", "''"));
+            return new[] { typeof(int), typeof(short), typeof(long), typeof(decimal) }.IndexOf(propertyType) > -1 ? value.ToString() : $"'{value.ToString().Replace("'", "''")}'";
         }
+    }
+
+    public class TableDefinition
+    {
+        public string SchemaName { get; set; }
+        public string Name { get; set; }
     }
 }

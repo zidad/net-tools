@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using Autofac;
-using Net.EasyNetQ.Pipes;
+using Net.EasyNetQ.ErrorHandling;
 
 namespace Net.EasyNetQ.Autofac
 {
     public class AutofacGlobalErrorHandlerBuilder : IErrorHandlerBuilder 
     {
-        private readonly IComponentContext scope;
+        readonly IComponentContext scope;
 
         public AutofacGlobalErrorHandlerBuilder(IComponentContext scope)
         {
