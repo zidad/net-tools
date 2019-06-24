@@ -9,9 +9,9 @@ namespace Net.EasyNetQ.Persistence.InMemory
     public class InMemoryRepository<TKey, TState> : IRepository<TKey, TState>
         where TState : ICorrelateBy<TKey>, new()
     {
-        private readonly ConcurrentDictionary<TKey, byte[]> store = new ConcurrentDictionary<TKey, byte[]>();
+        readonly ConcurrentDictionary<TKey, byte[]> store = new ConcurrentDictionary<TKey, byte[]>();
 
-        private static byte[] Serialize(TState state)
+        static byte[] Serialize(TState state)
         {
             using (var memoryStream = new MemoryStream())
             {
@@ -20,7 +20,7 @@ namespace Net.EasyNetQ.Persistence.InMemory
             }
         }
 
-        private static TState Deserialize(byte[] state)
+        static TState Deserialize(byte[] state)
         {
             using (var memoryStream = new MemoryStream(state))
                 return Serializer.Deserialize<TState>(memoryStream);
@@ -65,7 +65,7 @@ namespace Net.EasyNetQ.Persistence.InMemory
             return Task.FromResult(Find(key));
         }
 
-        private TState Find(TKey id)
+        TState Find(TKey id)
         {
             byte[] value;
             store.TryGetValue(id, out value);

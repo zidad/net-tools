@@ -1,7 +1,7 @@
 using System;
 using EasyNetQ.AutoSubscribe;
 
-namespace Net.EasyNetQ.Pipes
+namespace Net.EasyNetQ.ErrorHandling
 {
     public interface IErrorHandler
     {

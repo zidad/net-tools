@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 
-namespace Net.EasyNetQ.Persistence
+namespace Net.EasyNetQ.KeyGeneration
 {
     public class IntGenerator : IKeyGenerator<int>
     {
-        private int id = 0;
+        int id = 0;
 
         public int NewKey()
         {

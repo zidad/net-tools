@@ -1,12 +1,11 @@
 using System;
 using System.Threading;
-using EasyNetQ.AutoSubscribe;
+using Net.EasyNetQ;
 
-namespace Net.EasyNetQ.Persistence
+namespace Net.Tests.EasyNetQ
 {
     public class TestConsumer : 
-        ISaga<TestSagaInstance>, 
-        IConsumeLocked<TestMessage>
+        ISaga<TestSagaInstance>
     {
         public TestSagaInstance State { get; set; }
         

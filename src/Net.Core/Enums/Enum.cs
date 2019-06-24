@@ -75,9 +75,9 @@ namespace Net.Enums
     public class Enum<TEnum>
         where TEnum : struct
     {
-        private readonly int value;
-        private readonly string name;
-        private readonly TEnum enumValue;
+        readonly int value;
+        readonly string name;
+        readonly TEnum enumValue;
 
         public Enum(TEnum value)
         {

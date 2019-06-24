@@ -378,7 +378,7 @@ namespace Net.Collections
         /// <summary>
         /// See limitations of SelectRecursive[T]()
         /// </summary>
-        private static IEnumerable<Recursive<T>> SelectRecursive<T>(IEnumerable<T> items, Func<T, IEnumerable<T>> childSelector, Recursive<T> parent, int depth)
+        static IEnumerable<Recursive<T>> SelectRecursive<T>(IEnumerable<T> items, Func<T, IEnumerable<T>> childSelector, Recursive<T> parent, int depth)
         {
             if (items == null) throw new ArgumentNullException("items");
             if (childSelector == null) throw new ArgumentNullException("childSelector");
