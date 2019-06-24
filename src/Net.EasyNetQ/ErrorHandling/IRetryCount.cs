@@ -1,4 +1,4 @@
-namespace Net.EasyNetQ.Autofac
+namespace Net.EasyNetQ.ErrorHandling
 {
     public interface IRetryCount
     {

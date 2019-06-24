@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using Net.EasyNetQ.Pipes;
 
-namespace Net.EasyNetQ.Autofac
+namespace Net.EasyNetQ.ErrorHandling
 {
     public interface IErrorHandlerBuilder
     {

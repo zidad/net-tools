@@ -6,7 +6,7 @@ namespace Net.EasyNetQ
     public class CorrelatedStateHandler<TState, TCorrelationId> : ICorrelatedStateHandler
           where TState : class, ICorrelateBy<TCorrelationId>, new()
     {
-        private readonly IRepository<TCorrelationId, TState> repository;
+        readonly IRepository<TCorrelationId, TState> repository;
 
         public CorrelatedStateHandler(IRepository<TCorrelationId, TState> repository)
         {
@@ -33,12 +33,12 @@ namespace Net.EasyNetQ
             await repository.SetAsync(Consumer(consumer).State);
         }
 
-        private static TCorrelationId CorrelationId(object message)
+        static TCorrelationId CorrelationId(object message)
         {
             return ((ICorrelateBy<TCorrelationId>)message).Id;
         }
 
-        private static ISaga<TState> Consumer(object consumer)
+        static ISaga<TState> Consumer(object consumer)
         {
             return ((ISaga<TState>)consumer);
         }

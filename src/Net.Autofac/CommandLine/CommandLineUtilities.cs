@@ -7,18 +7,18 @@ using Net.Reflection;
 using Net.System;
 using Net.Text;
 
-namespace Net.CommandLine
+namespace Net.Autofac.CommandLine
 {
     public class CommandLineReader
     {
-        private readonly ILifetimeScope _activator;
+        readonly ILifetimeScope activator;
 
         public CommandLineReader(ILifetimeScope scope)
         {
-            _activator = scope;
+            activator = scope;
         }
 
-        static readonly Type[] primitiveTypes =
+        static readonly Type[] PrimitiveTypes =
         {
             typeof(string),
             typeof(int),
@@ -48,18 +48,18 @@ namespace Net.CommandLine
         {
             // TODO: add support for enums, what to do with array types?
             // handle primitive types directly
-            return primitiveTypes.Contains(type)
+            return PrimitiveTypes.Contains(type)
                 ? ReadPrimitiveValue(type, description, cancellationToken)
                 : ReadComplexValue(type, description, cancellationToken);
         }
 
-        private object ReadComplexValue(Type type, string title, CancellationToken cancellationToken)
+        object ReadComplexValue(Type type, string title, CancellationToken cancellationToken)
         {
             var propertyInfos = type.GetProperties();
             object instance;
             try
             {
-                instance = _activator.Resolve(type);
+                instance = activator.Resolve(type);
             }
             catch (Exception e)
             {
@@ -86,7 +86,7 @@ namespace Net.CommandLine
             return instance;
         }
 
-        private static object ReadPrimitiveValue(Type propertyType, string propertyDescription, CancellationToken cancellationToken)
+        static object ReadPrimitiveValue(Type propertyType, string propertyDescription, CancellationToken cancellationToken)
         {
             do
             {

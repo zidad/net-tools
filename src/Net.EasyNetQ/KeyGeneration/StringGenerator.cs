@@ -1,19 +1,19 @@
 ﻿using System.Globalization;
 
-namespace Net.EasyNetQ.Persistence
+namespace Net.EasyNetQ.KeyGeneration
 {
     public class StringGenerator : IKeyGenerator<string>
     {
-        private readonly IKeyGenerator<int> _intGenerator;
+        readonly IKeyGenerator<int> intGenerator;
 
         public StringGenerator(IKeyGenerator<int> intGenerator)
         {
-            _intGenerator = intGenerator;
+            this.intGenerator = intGenerator;
         }
 
         public string NewKey()
         {
-            return _intGenerator.NewKey().ToString(CultureInfo.InvariantCulture);
+            return intGenerator.NewKey().ToString(CultureInfo.InvariantCulture);
         }
     }
 }

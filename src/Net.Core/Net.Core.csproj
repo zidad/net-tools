@@ -1,80 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BBA0A9E7-2819-4ADA-94DB-BF5F3C5A6E1E}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Net</RootNamespace>
-    <AssemblyName>Net.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <OutputPath>..\..\bin</OutputPath>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyTitle>Net.Core</AssemblyTitle>
+    <Description>Net.Core</Description>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\Version.cs">
-      <Link>Properties\Version.cs</Link>
-    </Compile>
-    <Compile Include="Collections\EnumerableExtensions.cs" />
-    <Compile Include="Collections\PropertyEqualityComparer.cs" />
-    <Compile Include="CommandLine\ICommandLineTask.cs" />
-    <Compile Include="Enums\Enum.cs" />
-    <Compile Include="Enums\EnumList.cs" />
-    <Compile Include="Reflection\AssemblyPreloader.cs" />
-    <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DependencyInjection\RegisterAssemblyInContainer.cs" />
-    <Compile Include="DependencyInjection\RegisterAttribute.cs" />
-    <Compile Include="Reflection\AssemblyPreloaderSettings.cs" />
-    <Compile Include="Reflection\IAssemblyPreloadSettings.cs" />
-    <Compile Include="Reflection\ReflectionExtensions.cs" />
-    <Compile Include="Reflection\ReflectionProperty.cs" />
-    <Compile Include="System\DateTimeExtensions.cs" />
-    <Compile Include="System\EventArgs.cs" />
-    <Compile Include="System\TimeSpanExtensions.cs" />
-    <Compile Include="Text\StringExtensions.cs" />
-    <Compile Include="System\ToExtensions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\package\Net.Core\Net.Core.nuspec">
-      <Link>Properties\Net.Core.nuspec</Link>
-    </None>
-    <None Include="packages.config" />
-    <None Include="README.md" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

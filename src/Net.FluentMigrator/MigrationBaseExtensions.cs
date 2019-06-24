@@ -6,7 +6,7 @@ namespace Net.FluentMigrator
 {
     public static class MigrationBaseExtensions
     {
-        private static readonly FieldInfo contextField = typeof(MigrationBase).GetField("_context", BindingFlags.NonPublic | BindingFlags.Instance);
+        static readonly FieldInfo contextField = typeof(MigrationBase).GetField("_context", BindingFlags.NonPublic | BindingFlags.Instance);
 
         public static IMigrationContext GetMigrationContext(this MigrationBase migrationBase)
         {

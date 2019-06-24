@@ -1,12 +1,10 @@
 ﻿using System;
-using Net.Annotations;
 
 namespace Net.DependencyInjection
 {
     /// <summary>
     /// mark a class or interface as a service to be automatically discovered
     /// </summary>
-    [MeansImplicitUse]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface, AllowMultiple = false)]
     public class RegisterAttribute : Attribute
     {

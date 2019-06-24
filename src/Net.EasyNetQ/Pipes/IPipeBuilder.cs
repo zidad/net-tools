@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Net.EasyNetQ.Autofac
+namespace Net.EasyNetQ.Pipes
 {
     public interface IPipeBuilder
     {

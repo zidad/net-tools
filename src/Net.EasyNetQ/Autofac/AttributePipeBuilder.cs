@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Autofac;
+using Net.EasyNetQ.Pipes;
 using Net.Reflection;
 
 namespace Net.EasyNetQ.Autofac
 {
     public class AttributePipeBuilder : IPipeBuilder 
     {
-        private readonly IComponentContext scope;
+        readonly IComponentContext scope;
 
         public AttributePipeBuilder(IComponentContext scope)
         {

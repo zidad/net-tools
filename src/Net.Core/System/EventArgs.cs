@@ -8,7 +8,7 @@ namespace Net.System
     /// <typeparam name="T">The type of the value that should be given back</typeparam>
     public class EventArgs<T> : EventArgs
     {
-        private readonly T value;
+        readonly T value;
 
         public EventArgs(T value)
         {
