@@ -1,30 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using System.Linq;
 using System.Net;
 using Net.Reflection;
-using NUnit.Framework;
+using Xunit;
 
 namespace Net.Tests.Core
 {
-    [TestFixture]
     public class TypeIsOfGenericTypeFixture
     {
-        [Test]
+        [Fact]
         public void SimpleGenericInterfaces()
         {
-            Assert.IsTrue(typeof(List<string>).IsOfGenericType(typeof(ICollection<>)));
-            Assert.IsTrue(typeof(List<string>).IsOfGenericType(typeof(IEnumerable<>)));
-            Assert.IsTrue(typeof(IList<string>).IsOfGenericType(typeof(ICollection<>)));
-            Assert.IsTrue(typeof(IList<string>).IsOfGenericType(typeof(IEnumerable<>)));
+            Assert.True(typeof(List<string>).IsOfGenericType(typeof(ICollection<>)));
+            Assert.True(typeof(List<string>).IsOfGenericType(typeof(IEnumerable<>)));
+            Assert.True(typeof(IList<string>).IsOfGenericType(typeof(ICollection<>)));
+            Assert.True(typeof(IList<string>).IsOfGenericType(typeof(IEnumerable<>)));
 
-            Type concreteType;
-            Assert.IsTrue(typeof(List<string>).IsOfGenericType(typeof(IEnumerable<>), out concreteType));
-            Assert.AreEqual(typeof(IEnumerable<string>), concreteType);
+            Assert.True(typeof(List<string>).IsOfGenericType(typeof(IEnumerable<>), out var concreteType));
+            Assert.Equal(typeof(IEnumerable<string>), concreteType);
 
-            Assert.IsTrue(typeof(Table<string>).IsOfGenericType(typeof(IQueryable<>), out concreteType));
-            Assert.AreEqual(typeof(IQueryable<string>), concreteType);
+            Assert.True(typeof(Table<string>).IsOfGenericType(typeof(IQueryable<>), out concreteType));
+            Assert.Equal(typeof(IQueryable<string>), concreteType);
 
             Assert.Throws<ArgumentException>(() => {
                 typeof(Table<string>).IsOfGenericType(typeof(IQueryable<string>), out concreteType);
@@ -35,54 +32,54 @@ namespace Net.Tests.Core
             });
         }
 
-        [Test]
+        [Fact]
         public void TypeIsOfGenericInterfaceWithMultipleParameters()
         {
-            Assert.IsTrue(typeof (ClassImplementingInterfaceWithMultipleGenericParameters)
+            Assert.True(typeof (ClassImplementingInterfaceWithMultipleGenericParameters)
                 .IsOfGenericType(typeof (IInterfaceWithMultipleGenericParameters<,>)));
         }
 
-        [Test]
+        [Fact]
         public void TypeIsOfGenericTypeWithMultipleParameters()
         {
-            Assert.IsTrue(typeof(ClassInheritingClassWithMultipleGenericParameters)
+            Assert.True(typeof(ClassInheritingClassWithMultipleGenericParameters)
                 .IsOfGenericType(typeof(ClassWithMultipleGenericParameters<,>)));
         }
 
-        [Test]
+        [Fact]
         public void TypeIsOfGenericInterfaceWithMultipleParametersAndOutputsConcreteType()
         {
             Type concreteType;
-            Assert.IsTrue(typeof (ClassImplementingInterfaceWithMultipleGenericParameters)
+            Assert.True(typeof (ClassImplementingInterfaceWithMultipleGenericParameters)
                 .IsOfGenericType(typeof (IInterfaceWithMultipleGenericParameters<,>), out concreteType));
 
-            Assert.AreEqual(concreteType, typeof(IInterfaceWithMultipleGenericParameters<string, object>));
+            Assert.Equal(concreteType, typeof(IInterfaceWithMultipleGenericParameters<string, object>));
         }
 
-        [Test]
+        [Fact]
         public void TypeIsOfGenericTypeWithMultipleParametersAndOutputsConcreteType()
         {
             Type concreteType;
-            Assert.IsTrue(typeof(ClassInheritingClassWithMultipleGenericParameters)
+            Assert.True(typeof(ClassInheritingClassWithMultipleGenericParameters)
                 .IsOfGenericType(typeof(ClassWithMultipleGenericParameters<,>), out concreteType));
 
-            Assert.AreEqual(concreteType, typeof(ClassWithMultipleGenericParameters<string, string>));
+            Assert.Equal(concreteType, typeof(ClassWithMultipleGenericParameters<string, string>));
         }
 
-        [Test]
+        [Fact]
         public void TypeIsOfGenericTypeWithMultipleParametersAndOutputsConcreteType2()
         {
             Type concreteType;
-            Assert.IsTrue(typeof(ClassWithMultipleGenericParameters<,>)
+            Assert.True(typeof(ClassWithMultipleGenericParameters<,>)
                 .IsOfGenericType(typeof(ClassWithMultipleGenericParameters<,>), out concreteType));
 
-            Assert.IsTrue(typeof(ClassWithMultipleGenericParameters<,>)
+            Assert.True(typeof(ClassWithMultipleGenericParameters<,>)
                 .IsOfGenericType(typeof(ClassWithMultipleGenericParameters<,>)));
 
-            Assert.AreEqual(concreteType, typeof(ClassWithMultipleGenericParameters<,>));
+            Assert.Equal(concreteType, typeof(ClassWithMultipleGenericParameters<,>));
         }
 
-        [Test]
+        [Fact]
         public void ValidateParameters()
         {
 
@@ -94,10 +91,10 @@ namespace Net.Tests.Core
             });
 
             Type concreteType;
-            Assert.IsFalse(((Type)null)
+            Assert.False(((Type)null)
                 .IsOfGenericType(typeof(ClassWithMultipleGenericParameters<,>), out concreteType));
 
-            Assert.IsFalse(((Type)null)
+            Assert.False(((Type)null)
                 .IsOfGenericType(typeof(ClassWithMultipleGenericParameters<,>)));
 
             Assert.Throws<ArgumentNullException>(() => {
@@ -115,6 +112,10 @@ namespace Net.Tests.Core
             });
 
         }
+    }
+
+    public class Table<T>
+    {
     }
 
     public interface IInterfaceWithMultipleGenericParameters<T1, T2> { }

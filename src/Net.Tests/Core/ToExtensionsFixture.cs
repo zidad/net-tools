@@ -1,51 +1,49 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Threading;
 using Net.System;
-using NUnit.Framework;
+using Xunit;
 
 namespace Net.Tests.Core
 {
-    [TestFixture]
     public class ToExtensionsFixture
     {
-        [SetUp]
+        [Fact]
         public void Before() 
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-us");
         }
 
-        [Test]
+        [Fact]
         public void DoubleTests() 
         { 
-            Assert.AreEqual(1.23, "1.23".To<double>());
-            Assert.AreEqual(1.23, "1.23".To<double?>());
-            Assert.AreEqual(null, "".To<double?>());
-            Assert.AreEqual(0, "".To<double>());
+            Assert.Equal(1.23, "1.23".To<double>());
+            Assert.Equal(1.23, "1.23".To<double?>());
+            Assert.Equal(null, "".To<double?>());
+            Assert.Equal(0, "".To<double>());
         }
 
-        [Test]
+        [Fact]
         public void IntTests() 
         { 
-            Assert.AreEqual(1, "1".To<int>());
-            Assert.AreEqual(1, "1".To<int?>());
-            Assert.AreEqual(null, "".To<int?>());
-            Assert.AreEqual(0, "".To<int>());
+            Assert.Equal(1, "1".To<int>());
+            Assert.Equal(1, "1".To<int?>());
+            Assert.Equal(null, "".To<int?>());
+            Assert.Equal(0, "".To<int>());
 
-            Assert.AreEqual("2", 2.To<string>("#"));
-            Assert.AreEqual("1.23", 1.23.To<string>());
+            Assert.Equal("2", 2.To<string>("#"));
+            Assert.Equal("1.23", 1.23.To<string>());
         }
 
-        [Test]
+        [Fact]
         public void Formatting()
         {
-            Assert.AreEqual("<2>", 2.To<string>("<#>"));
+            Assert.Equal("<2>", 2.To<string>("<#>"));
         }
         
-        [Test]
+        [Fact]
         public void StringTests() 
         {
-            Assert.AreEqual("", ((object)null).To<string>());
+            Assert.Equal("", ((object)null).To<string>());
         }   
     }
 }
