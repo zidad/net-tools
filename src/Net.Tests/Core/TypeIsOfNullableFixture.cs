@@ -1,15 +1,15 @@
 ﻿using Net.Reflection;
-using NUnit.Framework;
+using Xunit;
 
 namespace Net.Tests.Core
 {
-    [TestFixture]
+
     public class TypeIsOfNullableFixture
     {
-        [Test]
+        [Fact]
         public void NullableDecimalIsNullableType()
         {
-            Assert.IsTrue(typeof (decimal?).IsNullable());
+            Assert.True(typeof (decimal?).IsNullable());
         }
     }
 }

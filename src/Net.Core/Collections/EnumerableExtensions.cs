@@ -16,7 +16,7 @@ namespace Net.Collections
 
         public static IEnumerable<TTarget> SafeCast<TTarget>(this IEnumerable source)
         {
-            return source == null ? null : source.Cast<TTarget>();
+            return source?.Cast<TTarget>();
         }
 
         /// <summary>
