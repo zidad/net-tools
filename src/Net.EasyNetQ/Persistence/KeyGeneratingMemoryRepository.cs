@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Net.EasyNetQ.KeyGeneration;
 using Net.EasyNetQ.Persistence.InMemory;
 
 namespace Net.EasyNetQ.Persistence
@@ -6,7 +7,7 @@ namespace Net.EasyNetQ.Persistence
     public class KeyGeneratingMemoryRepository<TState> : InMemoryRepository<string, TState>
         where TState : ICorrelateBy<string>, new()
     {
-        private readonly IKeyGenerator<string> keyGenerator;
+        readonly IKeyGenerator<string> keyGenerator;
 
         public KeyGeneratingMemoryRepository(IKeyGenerator<string> keyGenerator)
         {

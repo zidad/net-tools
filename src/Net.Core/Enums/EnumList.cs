@@ -11,10 +11,10 @@ namespace Net.Enums
     public sealed class EnumList<TEnum> : KeyedCollection<string, Enum<TEnum>>
         where TEnum : struct
     {
-        private static volatile EnumList<TEnum> defaultInstance;
+        static volatile EnumList<TEnum> defaultInstance;
         
         // ReSharper disable once StaticFieldInGenericType
-        private static readonly object LockObj = new object();
+        static readonly object LockObj = new object();
 
         public static EnumList<TEnum> Instance
         {
@@ -69,7 +69,7 @@ namespace Net.Enums
             return new EnumList<T>(true);
         }
 
-        private void FillList(Type enumType)
+        void FillList(Type enumType)
         {
             Clear();
             var valuesArray = global::System.Enum.GetValues(enumType);
@@ -82,7 +82,7 @@ namespace Net.Enums
             }
         }
 
-        private static Enum<TEnum> CreateEntry(TEnum value)
+        static Enum<TEnum> CreateEntry(TEnum value)
         {
             return new Enum<TEnum>(value);
         }

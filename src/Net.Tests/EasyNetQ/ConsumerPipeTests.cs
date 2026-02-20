@@ -9,7 +9,7 @@ namespace Net.Tests.EasyNetQ
 {
     public class ConsumerPipeTests
     {
-        private class TestConsumer : IConsume<MessageA>
+        class TestConsumer : IConsume<MessageA>
         {
             public void Consume(MessageA message)
             {

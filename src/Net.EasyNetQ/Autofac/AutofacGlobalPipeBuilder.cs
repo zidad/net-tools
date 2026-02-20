@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using Autofac;
+using Net.EasyNetQ.Pipes;
 
 namespace Net.EasyNetQ.Autofac
 {
     public class AutofacGlobalPipeBuilder : IPipeBuilder 
     {
-        private readonly IComponentContext scope;
+        readonly IComponentContext scope;
 
         public AutofacGlobalPipeBuilder(IComponentContext scope)
         {

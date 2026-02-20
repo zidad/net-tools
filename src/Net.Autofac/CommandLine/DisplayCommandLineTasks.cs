@@ -15,22 +15,22 @@ namespace Net.Autofac.CommandLine
 {
     public class DisplayCommandLineTasks : ICommandLineTask
     {
-        private readonly ILifetimeScope _container;
-        private readonly ILogger _logger;
-        private readonly CommandLineReader _commandLineReader;
+        readonly ILifetimeScope container;
+        readonly ILogger logger;
+        readonly CommandLineReader commandLineReader;
 
         public DisplayCommandLineTasks(ILifetimeScope container, ILogger logger, CommandLineReader commandLineReader)
         {
-            _container = container;
-            _logger = logger;
-            _commandLineReader = commandLineReader;
+            this.container = container;
+            this.logger = logger;
+            this.commandLineReader = commandLineReader;
         }
 
         public async Task Run(CancellationToken cancellationToken)
         {
-            var tasks = _container
+            var tasks = container
                 .ImplementationsFor<ICommandLineTask>()
-                .Concat(_container.ImplementationsForGenericType(typeof(ICommandLineTask<>)))
+                .Concat(container.ImplementationsForGenericType(typeof(ICommandLineTask<>)))
                 .Where(t => t != GetType())
                 .ToArray();
 
@@ -39,10 +39,10 @@ namespace Net.Autofac.CommandLine
                 for (var index = 1; index < tasks.Length + 1; index++)
                 {
                     var taskType = tasks[index - 1];
-                    _logger.Information("{0}. {1}", index, taskType.Name);
+                    logger.Information("{0}. {1}", index, taskType.Name);
                 }
 
-                _logger.Information("Enter a number of a task or empty to exit");
+                logger.Information("Enter a number of a task or empty to exit");
 
                 var readLine = Console.ReadLine();
 
@@ -55,45 +55,45 @@ namespace Net.Autofac.CommandLine
                     taskIndex = readLine.To<int>() - 1;
                     if (tasks.Length <= taskIndex || taskIndex < 0)
                     {
-                        _logger.Error("Invalid task number");
+                        logger.Error("Invalid task number");
                         continue;
                     }
                 }
                 catch (FormatException e)
                 {
-                    _logger.Error(e, "");
+                    logger.Error(e, "");
                     continue;
                 }
 
                 var type = tasks[taskIndex];
 
-                using (var scope = _container.BeginLifetimeScope("task"))
+                using (var scope = container.BeginLifetimeScope("task"))
                 {
                     var task = scope.Resolve(type);
                     try
                     {
                         await RunTask(cancellationToken, task);
 
-                        _logger.Information("Succesfully ran task {task}", task);
+                        logger.Information("Succesfully ran task {task}", task);
                     }
                     catch (TaskCanceledException)
                     {
-                        _logger.Warning("Task canceled by user {task}", task);
+                        logger.Warning("Task canceled by user {task}", task);
                     }
                     catch (OperationCanceledException)
                     {
-                        _logger.Warning("Operation canceled by user {task}", task);
+                        logger.Warning("Operation canceled by user {task}", task);
                     }
                     catch (Exception ex)
                     {
-                        _logger.Error(ex, "Failed to execute task {task}", task);
+                        logger.Error(ex, "Failed to execute task {task}", task);
                     }
                 }
                 Console.WriteLine();
             }
         }
 
-        private async Task RunTask(CancellationToken cancellationToken, object task)
+        async Task RunTask(CancellationToken cancellationToken, object task)
         {
             Type concreteType;
             var parameterlessTask = task as ICommandLineTask;
@@ -106,7 +106,7 @@ namespace Net.Autofac.CommandLine
                 var parameterInfo = methodInfo.GetParameters()[0];
                 var parameterName = parameterInfo.GetCustomAttribute<DescriptionAttribute>()
                     .Get(d => d.Description, parameterInfo.Name);
-                var parameters = _commandLineReader.ReadObject(paramType, cancellationToken, parameterName);
+                var parameters = commandLineReader.ReadObject(paramType, cancellationToken, parameterName);
                 await (Task)methodInfo.Invoke(task, new[] { parameters, cancellationToken });
             }
         }

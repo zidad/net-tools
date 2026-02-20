@@ -1,22 +1,24 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using EasyNetQ.AutoSubscribe;
+using Net.EasyNetQ.Pipes;
 using Net.Reflection;
 
 namespace Net.EasyNetQ
 {
     public class SimpleSagaPipe : IPipe
     {
-        private readonly IComponentContext context;
-        private ICorrelatedStateHandler handler;
+        readonly IComponentContext context;
+        ICorrelatedStateHandler handler;
 
         public SimpleSagaPipe(IComponentContext context)
         {
             this.context = context;
         }
 
-        public void OnBeforeConsume<TMessage, TConsumer>(TConsumer consumer, TMessage message)
+        public void OnBeforeConsume<TMessage, TConsumer>(TConsumer consumer, TMessage message, CancellationToken cancellationToken = new CancellationToken())
             where TMessage : class
             where TConsumer : IConsume<TMessage>
         {
@@ -26,7 +28,7 @@ namespace Net.EasyNetQ
             handler.LoadState(consumer, message);
         }
 
-        public void OnAfterConsume<TMessage, TConsumer>(TConsumer consumer, TMessage message, Exception exception)
+        public void OnAfterConsume<TMessage, TConsumer>(TConsumer consumer, TMessage message, Exception exception, CancellationToken cancellationToken = new CancellationToken())
             where TMessage : class
             where TConsumer : IConsume<TMessage>
         {
@@ -36,7 +38,7 @@ namespace Net.EasyNetQ
             handler.SaveState(consumer, message);
         }
 
-        public async Task OnBeforeConsumeAsync<TMessage, TConsumer>(TConsumer consumer, TMessage message)
+        public async Task OnBeforeConsumeAsync<TMessage, TConsumer>(TConsumer consumer, TMessage message, CancellationToken cancellationToken = new CancellationToken())
             where TMessage : class
             where TConsumer : IConsumeAsync<TMessage>
         {
@@ -46,7 +48,7 @@ namespace Net.EasyNetQ
             await handler.LoadStateAsync(consumer, message);
         }
 
-        public async Task OnAfterConsumeAsync<TMessage, TConsumer>(TConsumer consumer, TMessage message, Exception exception)
+        public async Task OnAfterConsumeAsync<TMessage, TConsumer>(TConsumer consumer, TMessage message, Exception exception, CancellationToken cancellationToken = new CancellationToken())
             where TMessage : class
             where TConsumer : IConsumeAsync<TMessage>
         {
@@ -56,7 +58,7 @@ namespace Net.EasyNetQ
             await handler.SaveStateAsync(consumer, message);
         }
 
-        private bool CreateStateHandlerIfConsumerRequiresState<TConsumer, TMessage>()
+        bool CreateStateHandlerIfConsumerRequiresState<TConsumer, TMessage>()
         {
             Type sagaType;
 

@@ -1,4 +1,4 @@
-﻿namespace Net.EasyNetQ
+﻿namespace Net.EasyNetQ.KeyGeneration
 {
     public interface IKeyGenerator<out TKey>
     {

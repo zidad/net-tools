@@ -1,6 +1,6 @@
 using System;
 
-namespace Net.EasyNetQ.Autofac
+namespace Net.EasyNetQ.Pipes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class PipeAttribute : Attribute

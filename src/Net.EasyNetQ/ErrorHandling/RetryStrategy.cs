@@ -1,15 +1,12 @@
 using System;
 using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
-using EasyNetQ.Scheduling;
-using Net.EasyNetQ.Autofac;
-using Net.EasyNetQ.Pipes;
 
 namespace Net.EasyNetQ.ErrorHandling
 {
     public abstract class RetryStrategy : IErrorHandler
     {
-        private int _maxRetries = 9;
+        int maxRetries = 9;
 
         public IBus Bus { get; set; }
 
@@ -17,8 +14,8 @@ namespace Net.EasyNetQ.ErrorHandling
 
         public virtual int MaxRetries
         {
-            get { return _maxRetries; }
-            set { _maxRetries = value; }
+            get { return maxRetries; }
+            set { maxRetries = value; }
         }
 
         public bool OnError<TMessage, TConsumer>(TConsumer consumer, TMessage message, Exception exception)
@@ -53,7 +50,7 @@ namespace Net.EasyNetQ.ErrorHandling
             var delay = CalculateDelay(rc.RetryCount);
 
             // TODO: this should be a Send() to a specific queue
-            Bus.FuturePublish(DateTime.Now + delay, message);
+            Bus.Scheduler.FuturePublish(DateTime.Now + delay, message);
 
             return true;
         }

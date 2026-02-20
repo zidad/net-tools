@@ -24,9 +24,9 @@ namespace Net.Web
     /// <typeparam name="T"></typeparam>
     public class WebGrid<T> : global::System.Web.Helpers.WebGrid
     {
-        private readonly SortDirection defaultSortDirection = SortDirection.Ascending;
+        readonly SortDirection defaultSortDirection = SortDirection.Ascending;
 
-        private SortDirection? sortDirection;
+        SortDirection? sortDirection;
 
         /// <param name="source"></param>
         /// <param name="columnNames">Data source column names. Auto-populated by default.</param>
@@ -86,12 +86,12 @@ namespace Net.Web
             return this;
         }
 
-        private static HttpContextBase HttpContext
+        static HttpContextBase HttpContext
         {
             get { return new HttpContextWrapper(global::System.Web.HttpContext.Current); }
         }
 
-        private static NameValueCollection QueryString
+        static NameValueCollection QueryString
         {
             get { return HttpContext.Request.QueryString; }
         }
