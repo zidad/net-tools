@@ -114,8 +114,9 @@ namespace Net.Tests.Core
         }
     }
 
-    public class Table<T>
+    public class Table<T> : EnumerableQuery<T>
     {
+        public Table() : base(Enumerable.Empty<T>()) { }
     }
 
     public interface IInterfaceWithMultipleGenericParameters<T1, T2> { }
