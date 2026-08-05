@@ -5,12 +5,24 @@
     "tasks": [
         {
             "label": "build",
-            "command": "dotnet build",
-            "type": "shell",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/Net.Tools.sln"
+            ],
             "group": "build",
-            "presentation": {
-                "reveal": "silent"
-            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "test",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "test",
+                "${workspaceFolder}/src/Net.Tools.sln"
+            ],
+            "group": "test",
             "problemMatcher": "$msCompile"
         }
     ]

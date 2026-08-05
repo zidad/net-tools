@@ -7,8 +7,7 @@ namespace Net.Tests.Core
 {
     public class ToExtensionsFixture
     {
-        [Fact]
-        public void Before() 
+        public ToExtensionsFixture()
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-us");
         }
