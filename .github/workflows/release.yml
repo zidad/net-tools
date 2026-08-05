@@ -1,0 +1,52 @@
+name: Release
+
+# Every merge to main publishes an auto-incremented prerelease (e.g. 0.2.1-alpha.0.5).
+# Pushing a `v*` tag publishes the matching stable version (e.g. v0.3.0 -> 0.3.0).
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # MinVer derives the version from tags and commit height, so it needs
+          # the full history and all tags.
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore src/Net.Tools.sln
+
+      - name: Build
+        run: dotnet build src/Net.Tools.sln --no-restore -c Release
+
+      - name: Test
+        run: dotnet test src/Net.Tools.sln --no-build -c Release
+
+      - name: Pack
+        run: dotnet pack src/Net.Core/Net.Core.csproj --no-build -c Release -o artifacts
+
+      - name: Show resolved version
+        run: ls -1 artifacts
+
+      - name: Publish to NuGet
+        run: >
+          dotnet nuget push "artifacts/*.nupkg"
+          --api-key ${{ secrets.NUGET_API_KEY }}
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate

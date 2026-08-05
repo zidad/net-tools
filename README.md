@@ -3,54 +3,48 @@ net-tools
 
 Net Industry repository/playground for any .NET reusable code.
 
+[![CI](https://github.com/zidad/net-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/zidad/net-tools/actions/workflows/ci.yml)
+[![NuGet](https://img.shields.io/nuget/v/Net.Core.svg)](https://www.nuget.org/packages/Net.Core)
 
-[![Build Status](https://travis-ci.org/zidad/net-tools.png?branch=master)](https://travis-ci.org/zidad/net-tools)
-
-![](https://img.shields.io/nuget/v/Net.Core.svg) Net.Core 
+Net.Core
 -
 Contains a set of .NET framework namespaces with no other dependencies, such as:
 
-- DependencyInjection: generic attributes for dependency injection registration
+- CommandLine: abstractions for command line tasks
 - Collections: mostly LINQ extension methods to make working with LINQ to objects easier
+- DependencyInjection: generic attributes for dependency injection registration
 - Enums: Easier Enum parsing/handling/attributing
 - Reflection: Improve working with attributes
+- System: DateTime/TimeSpan helpers and object conversion (`ToExtensions`)
 - Text: String formatting and checking utilities
-- ToExtensions: object extensions to allow easier conversion from one object to another
 
-[install from nuget:](http://nuget.org/packages/Net.Core)
+[install from nuget:](https://www.nuget.org/packages/Net.Core)
 
-    install-package Net.Core
+    dotnet add package Net.Core
 
-![](https://img.shields.io/nuget/v/Net.Autofac.svg) Net.Autofac 
+Building
 -
-Contains modules and classes to simplify setting up Autofac. Automatic scanning and registration of types based on attributes. Helps preventing me from having to do registration in most common scenario's 
 
-[install from nuget:](http://nuget.org/packages/Net.Autofac)
+    dotnet build src/Net.Tools.sln
+    dotnet test src/Net.Tools.sln
 
-    install-package Net.Autofac
-
-![](https://img.shields.io/nuget/v/Net.EasyNetQ.svg) Net.EasyNetQ
+Releasing
 -
-Contains experiments and additions for EasyNetQ (depends on Autofac too), to implement a Nancy-like pipeline for message processing in Autofac, and add (very basic) Correlation, Locking and Saga support
 
-[install from nuget:](http://nuget.org/packages/Net.EasyNetQ)
+Versions are derived from git tags by [MinVer](https://github.com/adamralph/minver) — there is no
+version number to edit in the csproj.
 
-    install-package Net.EasyNetQ
- ![](https://img.shields.io/nuget/v/Net.FluentMigrator.svg) Net.FluentMigrator
--
-Contains helpers to simplify the usage of [FluentMigrator](https://github.com/schambers/fluentmigrator "FluentMigrator")
+- **Merging to `main`** publishes an auto-incremented prerelease, e.g. `0.2.0-alpha.0.91`.
+- **Pushing a `v*` tag** publishes the matching stable version:
 
-[install from nuget:](http://nuget.org/packages/Net.FluentMigrator)
-    
-	install-package Net.FluentMigrator
+      git tag v0.3.0
+      git push origin v0.3.0
 
-![](https://img.shields.io/nuget/v/Net.Web.svg) Net.Web 
--
-Contains helpers for Asp.Net MVC
+  produces `Net.Core` `0.3.0`. Commits after that tag become `0.3.1-alpha.0.N`.
 
-[install from nuget:](http://nuget.org/packages/Net.Web)
-
-    install-package Net.Web
+Publishing is handled by `.github/workflows/release.yml` and requires a `NUGET_API_KEY`
+repository secret. Pushes use `--skip-duplicate`, so a merge that does not change the
+version is a harmless no-op.
 
 ---
 
