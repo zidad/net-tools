@@ -42,9 +42,17 @@ version number to edit in the csproj.
 
   produces `Net.Core` `0.3.0`. Commits after that tag become `0.3.1-alpha.0.N`.
 
-Publishing is handled by `.github/workflows/release.yml` and requires a `NUGET_API_KEY`
-repository secret. Pushes use `--skip-duplicate`, so a merge that does not change the
-version is a harmless no-op.
+Publishing is handled by `.github/workflows/release.yml` via nuget.org
+[Trusted Publishing](https://learn.microsoft.com/nuget/nuget-org/trusted-publishing) — no API
+key secret is stored. The workflow requests a GitHub OIDC token and exchanges it for an API
+key that is valid for one hour.
+
+The nuget.org policy is bound to this repository **and to the workflow file name**, so
+renaming `release.yml` breaks publishing until the policy is updated at
+nuget.org → Trusted Publishing.
+
+Pushes use `--skip-duplicate`, so a merge that does not change the version is a harmless
+no-op.
 
 ---
 
